@@ -1,0 +1,16 @@
+	
+<div class="panelBar">
+    <div class="pages">
+        <span>显示</span>
+        <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value,pageNum:{{page}}})">
+            <option value="20" {% if psize == 20 %}selected{%end%}>20</option>
+            <option value="50" {% if psize == 50 %}selected{%end%}>50</option>
+            <option value="100" {% if psize == 100 %}selected{%end%}>100</option>
+            <option value="200" {% if psize == 200 %}selected{%end%}>200</option>
+            <option value="400" {% if psize == 400 %}selected{%end%}>400</option>
+        </select>
+        <span>条，共{{count}}条</span>
+    </div>
+    <div class="pagination" targetType="navTab"  totalCount="{{count}}" numPerPage="{{psize}}" pageNumShown="10" currentPage="{{page}}"></div>
+</div>
+

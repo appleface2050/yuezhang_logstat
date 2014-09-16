@@ -1,0 +1,141 @@
+
+<form id="pagerForm" method="post" action="factstat?query_mode={{query_mode}}">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="query_mode" value="{{query_mode}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="group" value="{{group}}" />
+</form>
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factstat?query_mode={{query_mode}}" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td> 开始：
+                <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+            </td>
+            <td> 结束：
+                <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+            </td>
+            <td>
+                商务分组：
+                <select name="group">
+                    <option value="">不限</option>
+                    {% for i in groups %}
+                    <option value="{{i}}" {% if group == i %}selected{%end%}>{{i}}</option>
+                    {% end %}
+                </select>
+            </td>
+            <td>
+                <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+            </td>
+            </tr>
+        </table>
+    </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function () {
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'sum_container_chart',
+          type: 'line',
+          marginRight: 130,
+          marginBottom: 25
+      },
+      title: {
+          text: '厂商总和',
+          x: -20 //center
+      },
+      subtitle: {
+          text: '{{ start }} to {{ date }}',
+          x: -20
+      },
+      xAxis: {
+          categories: {{ x_axis }}
+      },
+      yAxis: {
+          title: {
+              text: 'count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          crosshairs: true,
+          shared: true
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+          borderWidth: 0
+      },
+      series: [
+      {% for idx,i in enumerate(results) %}
+      {
+          name: '{{ results[i]['title'] }}',
+          {% if results[i]['title'] not in ('启动用户')%}
+          visible:false,
+          {% end %}
+          data: [{{ results[i]['data'] }}]
+      }{% if idx != len(results)-1 %},{%end%} 
+      {% end %}
+      ]
+    });
+});
+</script>
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="sum_container_chart" style="min-width: 400px; height: 330px; margin: 0 auto"></div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">时间</th>
+                <th align="center" orderField="user_run">启动用户</th>
+                <th align="center" orderField="new_user_run">新增启动用户</th>
+                <th align="center" orderField="user_visit">访问用户</th>
+                <th align="center" orderField="new_user_visit">新增访问用户</th>
+                <th align="center" orderField="pay_user">付费用户</th>
+                <th align="center" orderField="cpay_down">按章付费数</th>
+                <th align="center" orderField="bpay_down">按本付费数</th>
+                <th align="center" orderField="cpay_user">按章付费用户</th>
+                <th align="center" orderField="bpay_user">按本付费用户</th>
+                <th align="center" orderField="cfree_down">按章免费数</th>
+                <th align="center" orderField="bfree_down">按本免费数</th>
+                <th align="center" orderField="cfree_user">按章免费用户</th>
+                <th align="center" orderField="bfree_user">按本免费用户</th>
+            </tr>
+		</thead>
+		<tbody>
+            {% for result in fact_sums %}
+            <tr>
+                <td align='center'>{{result['title']}}</td>
+                <td align='center'>{{result['user_run']}}</td>
+                <td align='center'>{{result['new_user_run']}}</td>
+                <td align='center'>{{result['user_visit']}}</td>
+                <td align='center'>{{result['new_user_visit']}}</td>
+                <td align='center'>{{result['pay_user']}}</td>
+                <td align='center'>{{result['cpay_down']}}</td>
+                <td align='center'>{{result['bpay_down']}}</td>
+                <td align='center'>{{result['cpay_user']}}</td>
+                <td align='center'>{{result['bpay_user']}}</td>
+                <td align='center'>{{result['cfree_down']}}</td>
+                <td align='center'>{{result['bfree_down']}}</td>
+                <td align='center'>{{result['cfree_user']}}</td>
+                <td align='center'>{{result['bfree_user']}}</td>
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

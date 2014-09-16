@@ -1,0 +1,59 @@
+
+<form id="pagerForm" method="post" action="accounting/businessdaily">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="query_mode" value="{{query_mode}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="group" value="{{group}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="accounting/businessdaily" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td> 日期：
+                <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+            </td>
+            <td>
+                商务分组：
+                <select name="group">
+                    <option value="">不限</option>
+                    {% for i in groups %}
+                    <option value="{{i}}" {% if group == i %}selected{%end%}>{{i}}</option>
+                    {% end %}
+                </select>
+            </td>
+            <td>
+                <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+            </td>
+            </tr>
+        </table>
+    </div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">厂家</th><th align="center" orderField="user_run">启动用户</th>
+                <th align="center" orderField="new_user_run">新增启动用户</th>
+                <th align="center" orderField="pay_user">付费用户</th>
+                <th align="center" orderField="sumfee">收入</th>
+            </tr>
+		</thead>
+		<tbody>
+            {% for i in basics %}
+            <tr>
+                <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                <td>{{i['pay_user']}}</td>
+                <td>{{i['sumfee']}}</td>
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

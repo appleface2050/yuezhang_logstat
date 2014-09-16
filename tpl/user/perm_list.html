@@ -1,0 +1,59 @@
+
+<form id="pagerForm" method="post" action="perm/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="perm/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					权限名：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="perm/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="perm/delete?id={sid_perm}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="perm/edit?id={sid_perm}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">权限名称</th>				
+				<th width="130" align="center">操作</th>				
+				<th width="80" align="center">资源</th>
+				<th width="220" align="center">更新日期</th>
+			</tr>
+		</thead>
+		<tbody>	
+			   {% for p in perms %}
+				<tr target="sid_perm" rel="{{p.id}}">
+					<td>{{p.id}}</td>
+					<td>{{p.name}}</td>
+					<td>{{p.oper}}</td>
+					<td>{{p.resource_id}}</td>
+					<td>{{p.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

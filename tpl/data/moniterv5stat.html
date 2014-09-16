@@ -1,0 +1,134 @@
+
+<form id="pagerForm" method="post" action="moniter/moniterv5stat">
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="end" value="{{end}}" /> 
+    <input type="hidden" name="scheme" value="{{scheme}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="moniter/moniterv5stat" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td>结束：
+                    <input name="end" class="date textInput readonly valid" readonly="true" type="text" value="{{end}}">
+                </td>
+                <td> 方案：
+                    <select name="scheme">
+                    <option value="">不限</option>
+                    {% for i in plan_list %}
+                    <option value={{i}} {% if scheme==i %}selected{% end %}>{{i}}</option>
+                    {% end %}
+                    </select>
+                </td>
+                
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+<script type="text/javascript">
+$(function () {    
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'container_moniterv5stat_chart',
+          type: 'line',
+          marginRight: 130,
+          marginBottom: 25
+      },
+      title: {
+          text: '数据监控',
+          x: -20 //center
+      },
+      subtitle: {
+          text: '{{ start }} to {{ end }}',
+          x: -20
+      },
+      xAxis: {
+          categories: {{ x_axis }}
+      },
+      yAxis: {
+          title: {
+              text: 'count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          crosshairs: true,
+          shared: true
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+          borderWidth: 0
+      },
+      series: [
+      {% for idx, i in enumerate(res_start.keys()) %}
+      {
+          name: '{{fielddesc_start[i]}}',
+          data: {{res_start[i]}}
+      }, 
+      {% end %}
+
+      {% for idx, i in enumerate(res_end.keys()) %}
+      {
+          name: '{{fielddesc_end[i]}}',
+          data: {{res_end[i]}}
+      }{% if idx != len(res_end.keys())-1 %},{%end%} 
+      {% end %}
+
+]
+    });
+});
+</script>
+
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_moniterv5stat_chart" style="min-width: 400px; height: 330px; margin: 0 auto"></div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">方案</th>
+				<th align="center">小时</th>
+				<th align="center">下载PV</th>
+                <th align="center">下载UV</th>
+				<th align="center">付费PV</th>
+				<th align="center">付费UV</th>
+				<th align="center">阅饼消费</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for i in range(0,24)%}
+            <tr>
+                <td align=“center”>{{result['start'][i]['ds']}} / {{result['end'][i]['ds']}}</td>
+                <td align=“center”>{{result['start'][i]['scheme']}}</td>
+                <td align=“center”>{{result['start'][i]['hour']}}</td>
+                <td align=“center”>{{result['start'][i]['download_pv']}} / {{result['end'][i]['download_pv']}}</td>
+                <td align=“center”>{{result['start'][i]['download_uv']}} / {{result['end'][i]['download_uv']}}</td>
+                <td align=“center”>{{result['start'][i]['pay_pv']}} / {{result['end'][i]['pay_pv']}}</td>
+                <td align=“center”>{{result['start'][i]['pay_uv']}} / {{result['end'][i]['pay_uv']}}</td>
+                <td align=“center”>{{result['start'][i]['fee']}} / {{result['end'][i]['fee']}}</td>
+            </tr>
+            {% end %}
+	    </tbody>
+	</table>
+</div>
+
+
+

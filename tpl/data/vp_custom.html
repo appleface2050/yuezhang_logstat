@@ -1,0 +1,58 @@
+
+<form id="pagerForm" method="post" action="operation/vp_custom">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="date" value="{{date}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="operation/vp_custom" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">特权名称</th>
+				<th align="center">特权包ID</th>
+				<th align="center">订购次数</th>
+				<th align="center">订购用户数</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['ds']}}</td>
+                <td align=“center”>{{i['name']}}</td>
+                <td align=“center”>{{i['productid']}}</td>
+                <td align=“center”>{{i['customtimes']}}</td>
+                <td align=“center”>{{i['customusers']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

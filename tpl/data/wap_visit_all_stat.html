@@ -1,0 +1,67 @@
+
+<form id="pagerForm" method="post" action="wap/wapvisitallstat">
+    <input type="hidden" name="date" value="{{date}}" /> 
+</form>
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="wap/wapvisitallstat" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>日期：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            <tr>
+        </table>
+    </div>
+    </form>
+</div>
+
+
+<div class="pageContent">
+	<div class="fixed" style="overflow:auto;height:420px;">
+        <div class="item_1">
+            <h3 class="title">touch页面分布</h3>
+            <table class="dataTable">
+                <tr><th>时间(PV/UV)</th><th>精选</th><th>出版</th><th>男频</th><th>女频</th><th>分类</th><th>排行</th>
+                     <th>搜索</th><th>个人中心</th><th>充值</th><th>书架</th></tr>
+                <tr>
+                    <td>昨日统计</td>
+                    <td>{{touch_stat['mainpage']['pv']}}/{{touch_stat['mainpage']['uv']}}</td>
+                    <td>{{touch_stat['publish_page']['pv']}}/{{touch_stat['publish_page']['uv']}}</td>
+                    <td>{{touch_stat['male']['pv']}}/{{touch_stat['male']['uv']}}</td>
+                    <td>{{touch_stat['female']['pv']}}/{{touch_stat['female']['uv']}}</td>
+                    <td>{{touch_stat['classification']['pv']}}/{{touch_stat['classification']['uv']}}</td>
+                    <td>{{touch_stat['ranking']['pv']}}/{{touch_stat['ranking']['uv']}}</td>
+                    <td>{{touch_stat['search_main']['pv']}}/{{touch_stat['search_main']['uv']}}</td>
+                    <td>{{touch_stat['user_entry']['pv']}}/{{touch_stat['user_entry']['uv']}}</td>
+                    <td>{{touch_stat['charge']['pv']}}/{{touch_stat['charge']['uv']}}</td>
+                    <td>{{touch_stat['bookshelf']['pv']}}/{{touch_stat['bookshelf']['uv']}}</td>
+                </tr>
+           </table>
+        </div>
+        <div class="item_2">
+            <h3 class="title">basic页面分布</h3>
+            <table class="dataTable">
+                <tr><th>时间(PV/UV)</th><th>精选</th><th>出版</th><th>男频</th><th>女频</th><th>分类</th><th>排行</th>
+                     <th>搜索</th><th>个人中心</th><th>充值</th><th>书架</th></tr>
+                <tr>
+                    <td>昨日统计</td>
+                    <td>{{basic_stat['mainpage']['pv']}}/{{basic_stat['mainpage']['uv']}}</td>
+                    <td>{{basic_stat['publish_page']['pv']}}/{{basic_stat['publish_page']['uv']}}</td>
+                    <td>{{basic_stat['male']['pv']}}/{{basic_stat['male']['uv']}}</td>
+                    <td>{{basic_stat['female']['pv']}}/{{basic_stat['female']['uv']}}</td>
+                    <td>{{basic_stat['classification']['pv']}}/{{basic_stat['classification']['uv']}}</td>
+                    <td>{{basic_stat['ranking']['pv']}}/{{basic_stat['ranking']['uv']}}</td>
+                    <td>{{basic_stat['search_main']['pv']}}/{{basic_stat['search_main']['uv']}}</td>
+                    <td>{{basic_stat['user_entry']['pv']}}/{{basic_stat['user_entry']['uv']}}</td>
+                    <td>{{basic_stat['charge']['pv']}}/{{basic_stat['charge']['uv']}}</td>
+                    <td>{{basic_stat['bookshelf']['pv']}}/{{basic_stat['bookshelf']['uv']}}</td>
+                </tr>
+           </table>
+        </div>
+    </div>
+</div>
+

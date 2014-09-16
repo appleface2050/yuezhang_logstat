@@ -1,0 +1,69 @@
+
+<form id="pagerForm" method="post" action="partner/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="factory_id" value="{{factory_id}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="partner/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					渠道ID：<input type="text" name="partner_id" value="{{partner_id}}"/>
+				</td>
+				<td>
+                    厂商：
+                    <select name="factory_id">
+                        <option value="0">不限</option>
+                        {% for i in factories %}
+                        <option value="{{i.id}}" {% if i.id == factory_id %}selected{%end%}>{{i.name}}</option>
+                        {% end %}
+                    </select>
+                    <input class="required" name="factory_name" type="text" postField="factory_name"
+                            suggestFields="factory_name" suggestUrl="factory/search" lookupGroup=""/>
+
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+            <li><a class="add" href="partner/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="partner/delete?id={sid_partner}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="partner/edit?id={sid_partner}" target="dialog"><span>修改</span></a></li>
+            <li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">渠道ID</th>				
+				<th width="220" align="center">厂商</th>
+				<th width="220" align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for i in partners %}
+				<tr target="sid_partner" rel="{{i.id}}">
+					<td>{{i.id }}</td>
+					<td>{{i.partner_id }}</td>
+					<td>{{i.factory.name }}</td>
+					<td>{{i.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

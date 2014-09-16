@@ -1,0 +1,128 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="basic" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date) %}
+	</form>
+</div>
+<div class="pageContent">
+	<div class="fixed" style="overflow:auto;height:420px;">
+        <div class="item_1">
+            <h3 class="title">基本统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>时间</th> <th>启动用户</th><th>新增启动用户</th><th>访问用户</th><th>新增访问用户</th>
+                    <th>付费用户</th> <th>活跃用户</th><th>访问PV</th><th>章付费数</th><th>本付费数</th>
+                    <th>章付费用户</th><th>本付费用户</th><th>章免费数</th><th>本免费数</th>
+                    <th>章免费用户</th><th>本免费用户</th><th>章阅饼消费</th><th>本月饼消费</th>              
+                    <th>批量订购阅饼消费</th><th>批量订购PV</th><th>批量订购UV</th>              
+                </tr>
+                {% for i in basics %}
+                <tr>
+                    <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                    <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+                    <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+                    <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td>
+                    <td>{{i['cpay_user']}}</td><td>{{i['bpay_user']}}</td>
+                    <td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+                    <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+                    <td>{{i['cfee']}}</td><td>{{i['bfee']}}</td>
+                    <td>{{i['batch_fee']}}</td><td>{{i['batch_pv']}}</td><td>{{i['batch_uv']}}</td>
+
+                </tr>
+                {% end %}
+            </table>
+        </div>
+        <div class="item_2">
+            <h3 class="title">页面分布</h3>
+            <table class="dataTable">
+                <tr><th>时间(PV/UV)</th><th>精选</th><th>出版</th><th>男频</th><th>女频</th><th>限免</th><th>分类</th>
+                    <th>排行</th><th>个人中心</th><th>充值</th><th>搜索</th><th>简介</th>     
+                </tr>
+                <tr>
+                    <td>昨日统计</td>
+                    <td>{{visit_y['chosen']['pv']}}/{{visit_y['chosen']['uv']}}</td>
+                    <td>{{visit_y['pub']['pv']}}/{{visit_y['pub']['uv']}}</td>
+                    <td>{{visit_y['boy']['pv']}}/{{visit_y['boy']['uv']}}</td>
+                    <td>{{visit_y['girl']['pv']}}/{{visit_y['girl']['uv']}}</td>
+                    <td>{{visit_y['freebytime']['pv']}}/{{visit_y['freebytime']['uv']}}</td>
+                    <td>{{visit_y['category']['pv']}}/{{visit_y['category']['uv']}}</td>
+                    <td>{{visit_y['rank']['pv']}}/{{visit_y['rank']['uv']}}</td>
+                    <td>{{visit_y['ucenter']['pv']}}/{{visit_y['ucenter']['uv']}}</td>
+                    <td>{{visit_y['recharge']['pv']}}/{{visit_y['recharge']['uv']}}</td>
+                    <td>{{visit_y['search']['pv']}}/{{visit_y['search']['uv']}}</td>
+                    <td>{{visit_y['bkintro']['pv']}}/{{visit_y['bkintro']['uv']}}</td>
+                </tr>
+                <tr>
+                    <td>前日统计</td>
+                    <td>{{visit_l['chosen']['pv']}}/{{visit_l['chosen']['uv']}}</td>
+                    <td>{{visit_l['pub']['pv']}}/{{visit_l['pub']['uv']}}</td>
+                    <td>{{visit_l['boy']['pv']}}/{{visit_l['boy']['uv']}}</td>
+                    <td>{{visit_l['girl']['pv']}}/{{visit_l['girl']['uv']}}</td>
+                    <td>{{visit_l['freebytime']['pv']}}/{{visit_l['freebytime']['uv']}}</td>
+                    <td>{{visit_l['category']['pv']}}/{{visit_l['category']['uv']}}</td>
+                    <td>{{visit_l['rank']['pv']}}/{{visit_l['rank']['uv']}}</td>
+                    <td>{{visit_l['ucenter']['pv']}}/{{visit_l['ucenter']['uv']}}</td>
+                    <td>{{visit_l['recharge']['pv']}}/{{visit_l['recharge']['uv']}}</td>
+                    <td>{{visit_l['search']['pv']}}/{{visit_l['search']['uv']}}</td>
+                    <td>{{visit_l['bkintro']['pv']}}/{{visit_l['bkintro']['uv']}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="item_3">
+            <h3 class="title">昨日按本书籍统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>书名</th><th>作者</th><th>版权</th><th>收益</th><th>付费下载数</th>
+                </tr>
+                {% for i in b_books%}
+                <tr>
+                    <td>{{i['name']}}</td><td>{{i['author']}}</td><td>{{i['cp']}}</td>
+                    <td>{{i.fee}}</td><td>{{i.pay_down}}</td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+        <div class="item_4">
+            <h3 class="title">昨日按章书籍统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>书名</th><th>作者</th><th>版权</th><th>收益</th><th>付费下载数</th>
+                </tr>
+                {% for i in c_books%}
+                <tr>
+                    <td>{{i['name']}}</td><td>{{i['author']}}</td><td>{{i['cp']}}</td>
+                    <td>{{i.fee}}</td><td>{{i.pay_down}}</td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+        <div class="cb"></div>
+        <div class="item_3">
+            <h3 class="title">昨日类型搜索统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>序号</th><th>类型</th><th>搜索次数</th><th>搜索人次</th>
+                </tr>
+                {% for i in topn_hw %}
+                <tr>
+                    <td>{{i.no}}</td><td>{{i.value}}</td><td>{{i.pv}}</td><td>{{i.uv}}</td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+        <div class="item_4">
+            <h3 class="title">昨日关键字搜索统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>序号</th><th>类型</th><th>搜索次数</th><th>搜索人次</th>
+                </tr>
+                {% for i in topn_sch %}
+                <tr>
+                    <td>{{i.no}}</td><td>{{i.value}}</td><td>{{i.pv}}</td><td>{{i.uv}}</td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+    </div>
+</div>
+

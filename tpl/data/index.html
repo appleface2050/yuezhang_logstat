@@ -1,0 +1,107 @@
+
+<div class="accordion" fillSpace="sideBar">
+	<div class="accordionHeader">
+    <h2><span>Folder</span>数据分析</h2>
+	</div>
+	<div class="accordionContent">
+	    <ul class="tree treeFolder">
+            {% if (touch_resource(['wap']) or touch_resource(['wap_all']))%}
+            <li><span>wap分析</span>
+                <ul>
+                    {% if (touch_resource(['wap:wap_factstat']) or touch_resource(['wap_all']) ) %}
+                    <li class="cur"><a href="wap/factorystat" target="navTab" rel="factorystat" title="wap-商务数据">商务数据</a></li>
+                    {% end %}
+                </ul>
+            </li>
+            {% end %}
+            {% if touch_resource(['ios_basic']) %}
+            <li><span>IOS分析</span>
+                <ul>
+                    <li class="cur"><a href="ios_basic/basic" target="navTab" rel="ios_basic" title="IOS-基本统计">基本统计</a></li>
+                    <li class="cur"><a href="ios_basic/week" target="navTab" rel="ios_basic" title="IOS-最近七日">最近七日</a></li>
+                </ul>
+            </li>
+            {% end %}
+            {% if touch_resource(['factstat']) %}
+            <li><span>厂商分析</span>
+                <ul>
+                    {% if touch_resource(['factstat:basic']) %}
+                    <li class="cur"><a href="factstat?query_mode=basic" target="navTab" rel="factbasic" title="厂商-基本统计">基本统计</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:product']) %}
+                    <li class="cur"><a href="factstat?query_mode=product" target="navTab" rel="factprod" title="厂商-机型统计">机型数据</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:one_product']) %}
+                    <li class="cur"><a href="factstat?query_mode=one_product" target="navTab" rel="factoneprod" title="厂商-单一机型">单一机型</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:fact']) %}
+                    <li class="cur"><a href="factstat?query_mode=fact" target="navTab" rel="factfact" title="厂商-厂商数据">厂商数据</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:business']) %}
+                    <li class="cur"><a href="factstat?query_mode=business" target="navTab" rel="factbus" title="厂商-商务数据">商务数据</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:factory_sum']) %}
+                    <li class="cur"><a href="factstat?query_mode=factory_sum" target="navTab" rel="factsum" title="厂商-厂商总和">厂商总和</a></li>
+                    {% end %}
+                    {% if touch_resource(['factstat:recharge_log']) %}
+                    <li class="cur"><a href="factstat?query_mode=recharge_log" target="navTab" rel="recharge_log" title="厂商-充值记录">充值记录</a></li>
+                    <li class="cur"><a href="factstat?query_mode=consume_log" target="navTab" rel="consume_log" title="厂商-消费记录">消费记录</a></li>
+                    {% end %}
+                </ul>
+            </li>
+            {% end %}
+            {% if touch_resource(['accounting']) %}
+            <li><span>厂商结算</span>
+                <ul>
+                    {% if touch_resource(['accounting:accounting_basic']) %}
+                    <li class="cur"><a href="accounting/factorydaily" target="navTab" rel="factorydaily" title="分账-厂商收入">厂商收入</a></li>
+                    {% end %}
+                    {% if touch_resource(['accounting:accounting_product']) %}
+                    <li class="cur"><a href="accounting/productdaily" target="navTab" rel="productdaily" title="分账-机型日报">机型日报</a></li>
+                    {% end %}
+                    {% if touch_resource(['accounting:accounting_business']) %}
+                    <li class="cur"><a href="accounting/businessdaily" target="navTab" rel="businessdaily" title="分账-商务日报">商务日报</a></li>
+                    {% end %}
+                    {% if touch_resource(['accounting:accounting_business']) %}
+                    <li class="cur"><a href="accounting/businessmonthly" target="navTab" rel="businessmonthly" title="分账-商务月报">商务月报</a></li>
+                    {% end %}
+                    {% if touch_resource(['accounting:accounting_book']) %}
+                    <li class="cur"><a href="accounting/book_stat" target="navTab" rel="book_stat" title="分账-厂商书籍">厂商书籍</a></li>
+                    {% end %}
+                </ul>
+            </li>
+            {% end %}
+            {% if touch_resource(['factshow']) %}
+            <li><span>厂商数据</span>
+                <ul>
+                    <li class="cur"><a href="factshow" target="navTab" rel="factshow" title="厂商-厂商数据">厂商数据</a></li>
+                </ul>
+            </li>
+            {% end %}
+            {% if touch_resource(['conf']) or touch_resource(['conf_all'])%}
+            <li><span>配置管理</span>
+                <ul>
+                    {% if touch_resource(['conf:conf_scope']) or touch_resource(['conf_all'])%}
+                    <li class="cur"><a href="scope/list" target="navTab" rel="scope">维度管理</a></li>
+                    {% end %}
+                    {% if touch_resource(['conf:conf_run']) or touch_resource(['conf_all'])%}
+                    <li class="cur"><a href="run/list" target="navTab" rel="run">运行平台</a></li>
+                    {% end %}
+                    {% if touch_resource(['conf:conf_factory']) or touch_resource(['conf_all'])%}
+                    <li class="cur"><a href="factory/list" target="navTab" rel="factory">厂家信息</a></li>
+                    {% end %}
+                    {% if touch_resource(['conf:conf_partner']) or touch_resource(['conf_all'])%}
+                    <li class="cur"><a href="partner/list" target="navTab" rel="parnter">渠道信息</a></li>
+                    {% end %}
+                    {% if touch_resource(['conf:conf_factory_accounting']) or touch_resource(['conf_all'])%}
+                    <li class="cur"><a href="factory_accounting/list" target="navTab" rel="factory_accounting">结算信息</a></li>
+                    {% end %}
+                </ul>
+            </li>
+            {% end %}
+        </ul>
+	</div>
+</div>
+
+
+

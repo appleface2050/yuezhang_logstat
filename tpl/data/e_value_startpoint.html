@@ -1,0 +1,73 @@
+
+<form id="pagerForm" method="post" action="e_value/startpoint">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="book_ids" value="{{book_ids}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="e_value/startpoint" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>书的ID：<input type="text" name="book_ids" size="50" value="{{book_ids}}"/>&nbsp;半角逗号分隔
+            <td><a class="icon" href="e_value/startpoint?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL    </span></a></td>
+            <td colspan="6"></td>           
+            </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+				<th align="center" orderField="shucheng">书城</th>
+				<th align="center" orderField="shujia">书架</th>
+				<th align="center" orderField="dabao">打包</th>
+				<th align="center">TOP1</th>
+			    <th align="center">TOP2</th>
+				<th align="center">TOP3</th>
+				<th align="center">TOP4</th>
+				<th align="center">TOP5</th>
+				<th align="center">TOP6</th>
+				<th align="center">TOP7</th>
+				<th align="center">TOP8</th>
+				<th align="center">TOP9</th>
+				<th align="center">TOP10</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in books %}
+            <tr>
+                <td align=“center”>{{i['bid']}}</td>
+                <td>                                                                                                                                                
+                    <a style="color:#1f3b7b;" href="book/chart?book_ids={{i['bid']}}" target="navTab" rel="book_chart" title="单本数据">{{i['name']}} </a>
+                </td>
+                <td align=“center”>{{i['shucheng']}}</td>
+                <td align=“center”>{{i['shujia']}}</td>
+                <td align=“center”>{{i['dabao']}}</td>
+                <td align=“center”>{{i['top1']}}</td>
+                <td align=“center”>{{i['top2']}}</td>
+                <td align=“center”>{{i['top3']}}</td>
+                <td align=“center”>{{i['top4']}}</td>
+                <td align=“center”>{{i['top5']}}</td>
+                <td align=“center”>{{i['top6']}}</td>
+                <td align=“center”>{{i['top7']}}</td>
+                <td align=“center”>{{i['top8']}}</td>
+                <td align=“center”>{{i['top9']}}</td>
+                <td align=“center”>{{i['top10']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

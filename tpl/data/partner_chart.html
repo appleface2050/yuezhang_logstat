@@ -1,0 +1,65 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="basic/{{mode}}" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list) %}
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+      chart = new Highcharts.Chart({
+          chart: {
+              renderTo: 'container_parnter_chart',
+              type: 'line',
+              marginRight: 130,
+              marginBottom: 25
+          },
+          title: {
+              text: '基本统计',
+              x: -20 //center
+          },
+          subtitle: {
+              text: {% if mode == 'week' %}'最近一周'{% elif mode=='month' %}'最近一月'{% end %},
+              x: -20
+          },
+          xAxis: {
+              categories: {{ x_axis }}
+          },
+          yAxis: {
+              title: {
+                  text: 'count'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              formatter: function() {
+                      return '<b>'+ this.series.name +'</b><br/>'+
+                      this.x +': '+ this.y;
+              }
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'top',
+              x: -10,
+              y: 100,
+              borderWidth: 0
+          },
+          series: [
+          {% for i in results %}
+          {
+              name: '{{ results[i]['title'] }}',
+              data: [{{ results[i]['data'] }}]
+          }, 
+          {% end %}
+          ]
+      });
+});
+</script>
+<div id="container_parnter_chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+

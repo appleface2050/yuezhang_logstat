@@ -1,0 +1,66 @@
+
+<form id="pagerForm" method="post" action="user/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+	<input type="hidden" name="parrent_id" value="{{parent_id}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="org/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					组织名：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+					上级组织：
+                    <select name="parent_id">
+                        <option value="0">不限</option>
+                        {% for i in all_orgs %}
+                        <option value="{{i.id}}" {% if parent_id == i.id %}selected{%end%}>{{i.full_name}}</option>
+                        {% end %}
+                    </select>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="org/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="org/delete?id={sid_org}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="org/edit?id={sid_org}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">名称</th>				
+				<th width="220" align="center">上级</th>
+				<th width="220" align="center">更新日期</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for o in orgs%}
+				<tr target="sid_org" rel="{{o.id}}">
+					<td>{{o.id}}</td>
+					<td>{{o.name}}</td>
+					<td>{% if o.parent %}{{o.parent.full_name}}{%else%}无{%end%}</td>
+					<td>{{o.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

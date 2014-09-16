@@ -1,0 +1,57 @@
+
+<form id="pagerForm" method="post" action="operation/qiandao_recharge">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="date" value="{{date}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="operation/qiandao_recharge" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td><a class="icon" href="operation/qiandao_recharge?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+				<th align="center">时间</th>
+				<th align="center">充值类型</th>
+				<th align="center">数量</th>
+				<th align="center">金额</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['ds']}}</td>
+                <td align=“center”>{% if i['rechargetype']==1 %}支付宝{% elif i['rechargetype']==5 %}银行卡{% elif i['rechargetype']==8 %}充值卡{% elif i['rechargetype']==17 %}财付通{%else%}i['rechargetype']{%end%}</td>
+                <td align=“center”>{{i['num']}}</td>
+                <td align=“center”>{{i['amount']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

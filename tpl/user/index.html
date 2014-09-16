@@ -1,0 +1,16 @@
+<div class="accordion" fillSpace="sideBar">
+	<div class="accordionHeader">
+    <h2><span>Folder</span>用户管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder">
+            {% if touch_resource(['user']) %}
+			<li><a href="org/list" target="navTab" rel="ulist">组织管理</a></li>
+			<li><a href="user/list" target="navTab" rel="ulist">用户管理</a></li>
+			<li><a href="role/list" target="navTab" rel="ulist">角色管理</a></li>
+			<li><a href="perm/list" target="navTab" rel="ulist">权限管理</a></li>
+			<li><a href="resource/list" target="navTab" rel="ulist">资源管理</a></li>
+            {% end %}
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,66 @@
+
+<form id="pagerForm" method="post" action="wap/wapvisitstat">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="date" value="{{date}}" /> 
+    <input type="hidden" name="partner_id" value="{{partner_id}}" /> 
+    <input type="hidden" name="wap_type" value="{{wap_type}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="wap/wapvisitstat" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>日期：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>wap类型：
+                    <select name="wap_type">
+                        <option value="" {% if not wap_type %}selected{% end %}>不限</option>
+                        <option value="touch" {% if wap_type == 'touch' %}selected{% end %}>touch</option>
+                        <option value="basic" {% if wap_type == 'basic' %}selected{% end %}>basic</option>
+                    </select>
+                </td>
+                <td> 渠道ID：<input type="text" name="partner_id" size="16" value="{{partner_id}}"/> </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">wap类别</th>
+				<th align="center">渠道号</th>
+                <th align="center">页面类型</th>
+				<th align="center">PV</th>
+				<th align="center">UV</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{date}}</td>
+                <td align=“center”>{{i['wap_type']}}</td>
+                <td align=“center”>{{i['partner_id']}}</td>
+                <td align=“center”>{{i['page_type']}}</td>
+                <td align=“center”>{{i['pv']}}</td>
+                <td align=“center”>{{i['uv']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

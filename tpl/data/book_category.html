@@ -1,0 +1,63 @@
+
+<form id="pagerForm" method="post" action="book/category">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="charge_type" value="{{charge_type}}" />
+	<input type="hidden" name="platform_id" value="{{platform_id}}" />
+	<input type="hidden" name="run_id" value="{{run_id}}" />
+	<input type="hidden" name="plan_id" value="{{plan_id}}" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="version_name" value="{{version_name}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="cate_type" value="{{cate_type}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="book/category" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>
+            计费类型：<select name="charge_type">
+                <option value="" {% if not charge_type %}selected{% end %}>不限</option>
+                <option value="book" {% if charge_type == 'book' %}selected{% end %}>按本</option>
+                <option value="chapter" {% if charge_type == 'chapter' %}selected{% end %}>按章</option>
+            </select>
+            </td>
+            <td>
+            分类类型：<select name="cate_type">
+                <option value="" {% if not cate_type %}selected{% end %}>不限</option>
+                <option value="cate2" {% if cate_type == 'cate2' %}selected{% end %}>一级</option>
+                <option value="cate1" {% if cate_type == 'cate1' %}selected{% end %}>二级</option>
+                <option value="cate0" {% if cate_type == 'cate0' %}selected{% end %}>三级</option>
+            </select>
+            </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="108">
+		<thead>
+			<tr>
+				<th align="center">类别</th>
+				<th align="center">月饼消费</th>
+				<th align="center">批量下载月饼消费</th>
+			</tr>
+		</thead>
+		<tbody>		
+            {% for i in res_list%}
+            <tr>
+                <td>{{i.keys()[0]}}</td>
+                <td>{{i.get(i.keys()[0])['fee']}}</td>
+                <td>{{i.get(i.keys()[0])['batch_fee']}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+</div>
+

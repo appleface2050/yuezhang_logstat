@@ -1,0 +1,99 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="visit/{{mode}}" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+      chart = new Highcharts.Chart({
+          chart: {
+              renderTo: 'container_visit_chart',
+              type: 'line',
+              marginRight: 130,
+              marginBottom: 25
+          },
+          title: {
+              text: {% if mode == 'week' %}'最近一周'{% elif mode=='month' %}'最近一月'{% end %},
+              x: -20
+          },
+          xAxis: {
+              categories: {{ x_axis }}
+          },
+          yAxis: {
+              title: {
+                  text: 'count'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              crosshairs: true,
+              shared: true
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'top',
+              x: -10,
+              y: 100,
+              borderWidth: 0
+          },
+          series: [
+          {% for idx,i in enumerate(results) %}
+              {% for k in ['pv','uv']%}
+              {
+                  name: '{{ results[i]['title'] }}_{{k}}',
+                  {% if i not in ('chosen','search')%}
+                  visible:false,
+                  {% end %}
+                  data: [{{ results[i][k] }}]
+              }{% if idx != len(results)-1 or k!='uv' %},{%end%}
+              {% end %}
+          {% end %}
+          ]
+      });
+});
+</script>
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_visit_chart" style="min-width: 400px; height: 360; margin: 0 auto 10px"></div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+        <tr>
+            <th align="center">时间(PV/UV)</th><th align="center">精选</th><th align="center">出版</th>
+            <th align="center">男频</th><th align="center">女频</th><th align="center">限免</th>
+            <th align="center">分类</th><th align="center">排行</th><th align="center">个人中心</th>
+            <th align="center">充值</th><th align="center">特权中心</th><th align="center">搜索</th>
+            <th align="center">简介</th>     
+        </tr>
+		</thead>
+		<tbody>
+        {% for i in visits %}
+        <tr>
+            <td>{{i['title']}}</td>
+            <td>{{i['chosen']['pv']}}/{{i['chosen']['uv']}}</td>
+            <td>{{i['pub']['pv']}}/{{i['pub']['uv']}}</td>
+            <td>{{i['boy']['pv']}}/{{i['boy']['uv']}}</td>
+            <td>{{i['girl']['pv']}}/{{i['girl']['uv']}}</td>
+            <td>{{i['freebytime']['pv']}}/{{i['freebytime']['uv']}}</td>
+            <td>{{i['category']['pv']}}/{{i['category']['uv']}}</td>
+            <td>{{i['rank']['pv']}}/{{i['rank']['uv']}}</td>
+            <td>{{i['ucenter']['pv']}}/{{i['ucenter']['uv']}}</td>
+            <td>{{i['recharge']['pv']}}/{{i['recharge']['uv']}}</td>
+            <td>{{i['privcenter']['pv']}}/{{i['privcenter']['uv']}}</td>
+            <td>{{i['search']['pv']}}/{{i['search']['uv']}}</td>
+            <td>{{i['bkintro']['pv']}}/{{i['bkintro']['uv']}}</td>
+        </tr>
+        {% end %}
+		</tbody>
+    </table>
+</div>
+</div>
+

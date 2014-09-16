@@ -1,0 +1,67 @@
+
+<form id="pagerForm" method="post" action="operation/push_detail">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="date" value="{{date}}" /> 
+    <input type="hidden" name="pid" value="{{pid}}" /> 
+    <input type="hidden" name="channel" value="{{channel}}" /> 
+    <input type="hidden" name="innerVer" value="{{innerVer}}" /> 
+    <input type="hidden" name="orderField" value="{{order_field}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="operation/push_detail" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td> pushID：<input type="text" name="pid" size="10" value="{{pid}}"/> </td>
+                <td> 渠道号：<input type="text" name="channel" size="10" value="{{channel}}"/> </td>
+                <!--<td> 版本号：<input type="text" name="innerVer" size="10" value="{{innerVer}}"/> </td>-->
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+                <th align="center">时间</th>
+				<th align="center">pushID</th>
+				<th align="center">渠道</th>
+				<th align="center">版本</th>
+				<th align="center" orderField="visits">push数量</th>
+				<th align="center" orderField="user_visit">push人数</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['ds']}}</td>
+                <td align=“center”>{{i['pid']}}</td>
+                <td align=“center”>{{i['channel']}}</td>
+                <td align=“center”>{{i['innerVer']}}</td>
+                <td align=“center”>{{i['visits']}}</td>
+                <td align=“center”>{{i['user_visit']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

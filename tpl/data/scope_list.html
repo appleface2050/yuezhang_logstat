@@ -1,0 +1,64 @@
+
+<form id="pagerForm" method="post" action="scope/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="platform_id" value="{{platform_id}}" />
+	<input type="hidden" name="run_id" value="{{run_id}}" />
+	<input type="hidden" name="plan_id" value="{{plan_id}}" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="version_name" value="{{version_name.replace('.','__')}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+	<input type="hidden" name="unique" value="{{unique}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="scope/list" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,unique=unique) %}
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="scope/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="scope/delete?id={sid_scope}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="scope/edit?id={sid_scope}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">序号</th>
+				<th align="center">书城版本</th>				
+				<th align="center">运行平台</th>				
+				<th align="center">渠道ID</th>
+				<th align="center">客户端版本</th>
+				<th align="center">机型</th>
+				<th align="center">状态</th>
+				<th align="center">统计类型</th>
+				<th align="center">时间模式</th>
+				<th align="center">更新日期</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for s in scopes %}
+				<tr target="sid_scope" rel="{{s.id}}">
+					<td>{{s.id}}</td>
+					<td>{{s.platform_id}}</td>
+					<td>{{run_dict.get(s.run_id,'')}}</td>
+					<td>{{s.partner_id}}</td>
+					<td>{{s.version_name}}</td>
+					<td>{{s.product_name}}</td>
+					<td>{{s.status}}</td>
+					<td>{{s.mask}}</td>
+					<td>{{s.modes}}</td>
+					<td>{{s.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

@@ -1,0 +1,25 @@
+
+<div class="pageContent">
+	<form method="post" action="role/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">			
+			<p>
+				<label>角色名称：</label>
+				<input name="name" class="required" type="text" alt="请输入角色名称"/>
+			</p>
+            <p>
+                <label>权限列表：</label>
+                {% for i in all_perms %}
+                <label><input name="perm__{{i.id}}" value="{{i.id}}" type="checkbox">{{i.name}}</label>
+                {% end %}
+            </p>
+        </div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

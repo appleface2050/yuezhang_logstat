@@ -1,0 +1,63 @@
+
+<form id="pagerForm" method="post" action="accounting/productdaily">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="query_mode" value="{{query_mode}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="factory_id" value="{{factory_id}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="accounting/productdaily" method="post">
+	    <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td> 开始：
+                        <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                    </td>
+                    <td> 厂商：
+                        <select name="factory_id" class="required">
+                        {% if (current_user.is_root and query_mode == 'product') or current_user['name'] == 'wangliang' %}
+                        <option value="-1">不限</option>
+                        {% end %}
+                        {% for i in factory_list %}
+                        <option value="{{i.id}}" {% if factory_id == i.id %}selected{% end %}>{{i.name}}</option>
+                        {% end %}
+                        </select>
+                        <input class="required" name="factory_name" type="text" postField="factory_name"
+                            suggestFields="factory_name" suggestUrl="factory_accounting/search?resource={{query_mode}}" lookupGroup=""/>
+                    </td>
+                    <td>
+                        <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+        <thead>
+            <tr>
+                <th align="center">时间</th>
+                <th align="center">机型</th>
+                <th align="center" orderField="user_run">启动用户</th>
+                <th align="center" orderField="new_user_run">新增启动用户</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in basics %}
+            <tr>
+                <td>{{i['time']}}</td>
+                <td>{{i['product_name']}}</td>
+                <td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+            </tr>
+            {% end %}
+        </tbody>
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

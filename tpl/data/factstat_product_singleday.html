@@ -1,0 +1,58 @@
+
+<form id="pagerForm" method="post" action="factstat">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="query_mode" value="{{query_mode}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="factory_id" value="{{factory_id}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factstat" method="post">
+    {% module FactoryQueryCond(factory_list,factory_id,product_name,query_mode,start,date) %}
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+        <thead>
+            <tr>
+                <th align="center">机型</th>
+                <th align="center">时间</th>
+                <th align="center" orderField="user_run">启动用户</th>
+                <th align="center" orderField="new_user_run">新增启动用户</th>
+                <th align="center" orderField="user_visit">访问用户</th>
+                <th align="center" orderField="new_user_visit">新增访问用户</th>
+                <th align="center" orderField="pay_user">付费用户</th>
+                <th align="center" orderField="active_user_visit">活跃用户</th>
+                <th align="center" orderField="visits">访问PV</th>
+                <th align="center" orderField="cpay_down">按章付费数</th>
+                <th align="center" orderField="bpay_down">按本付费数</th>
+                <th align="center" orderField="cpay_user">按章付费用户</th>
+                <th align="center" orderField="bpay_user">按本付费用户</th>
+                <th align="center" orderField="cfree_down">按章免费数</th>
+                <th align="center" orderField="bfree_down">按本免费数</th>
+                <th align="center" orderField="cfree_user">按章免费用户</th>
+                <th align="center" orderField="bfree_user">按本免费用户</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in basics %}
+            <tr>
+                <td>{{i['product_name']}}</td><td>{{i['time']}}</td>
+                <td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+                <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+                <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td><td>{{i['cpay_user']}}</td>
+                <td>{{i['bpay_user']}}</td><td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+                <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+            </tr>
+            {% end %}
+        </tbody>
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

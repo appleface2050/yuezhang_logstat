@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>index</title>
+<link rel="stylesheet" type="text/css" href="{{static_url('css/style.css')}}"/>
+</head>
+<body id="z-index">
+<div class="z-p-head">
+    <div class="z-head">
+        <a href="#" class="z-logo">
+        <img src="{{static_url('img/logo.jpg')}}"/>
+        </a>
+        <span>数据统计平台</span>
+    </div>
+</div>
+<div class="z-p-content">
+  <div class="z-content">
+    <form action="/user/login" method="post" name='loginform' class="z-login">
+        <h1 class="z-tit">用户登录</h1>
+        <input name="name" type="text" class="z-text" value="输入用户名" onfocus="if(this.value=='输入用户名'){this.value=''}"/>
+        <input name="passwd" type="password" class="z-text" value="输入密码" onfocus="if(this.value=='输入密码'){this.value=''}" value="输入密码"/>
+        <button class="z-btn" onclick="document.loginform.submit()">登录</button>
+    </form>
+  </div>
+</div>
+<div class="z-p-footer">
+  <div class="z-footer">
+    <p class="z-textC">2013 All Rights Reserved 掌中浩阅科技有限公司 版权所有</p>
+  </div>
+</div>
+</body>
+</html>
+

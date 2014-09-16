@@ -1,0 +1,23 @@
+UserBasic_V6 合成说明
+1. 历史数据初始化
+	A. Userinit ：
+		step1,  从 Hadoop 中HTTPLog /user/hive/warehouse/USERINIT_V6_LOG/ 用 USERINIT MapRed 生成每10日的 first_init,last_init， /result/user_tempdata/initRawData/ds=2012-05-1N
+		step2,  用 USERINITCOMB MapRed 对 ds=2012-0**N 合并成1个文件 /result/user_tempdata/user_init/ds=Tot/
+		
+	B. Userivs:
+		step1,  从 Hive 中Service_v6  greoup by 按月合并, /result/user_tempdata/VisRawData/
+		step2, 用 UserVisFirstCombineMap 合并 /result/user_tempdata/user_vis/ds=Tot/
+2. 每日增量更新 59.151.93.147 /home/hadoop/logMR/cron_daynewuser.sh
+	A.	Userinit:
+		step1, USERINIT_V6_LOG 用 USERINITMR , hive add partition
+		step2, befday + newuser 来 USERINITCOMB MapRed
+	B.UserVis:
+		step1, hive 中 service_v6 用USERVIS
+		step2, befday + newuser USERVISCOMB MapRed
+	C.userbasic_v6_new:
+		step1, userinit +visuser 用VISJOIN MapRed
+
+剩余问题:
+1. 每天失败email提醒，没做
+2. Map 类太多，最好重构合并
+3. 如果能整合其他LogSplit 到一个项目最好		

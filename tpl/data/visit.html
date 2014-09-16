@@ -1,0 +1,49 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="visit" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date) %}
+	</form>
+</div>
+<div class="pageContent">
+	<div class="fixed" style="overflow:auto;height:420px;">
+        <div class="item_2">
+            <h3 class="title">页面分布</h3>
+            <table class="dataTable">
+                <tr><th>时间(PV/UV)</th><th>精选</th><th>出版</th><th>男频</th><th>女频</th><th>限免</th><th>分类</th>
+                    <th>排行</th><th>个人中心</th><th>充值</th><th>特权中心</th><th>搜索</th><th>简介</th>     
+                </tr>
+                <tr>
+                    <td>昨日统计</td>
+                    <td>{{visit_y['chosen']['pv']}}/{{visit_y['chosen']['uv']}}</td>
+                    <td>{{visit_y['pub']['pv']}}/{{visit_y['pub']['uv']}}</td>
+                    <td>{{visit_y['boy']['pv']}}/{{visit_y['boy']['uv']}}</td>
+                    <td>{{visit_y['girl']['pv']}}/{{visit_y['girl']['uv']}}</td>
+                    <td>{{visit_y['freebytime']['pv']}}/{{visit_y['freebytime']['uv']}}</td>
+                    <td>{{visit_y['category']['pv']}}/{{visit_y['category']['uv']}}</td>
+                    <td>{{visit_y['rank']['pv']}}/{{visit_y['rank']['uv']}}</td>
+                    <td>{{visit_y['ucenter']['pv']}}/{{visit_y['ucenter']['uv']}}</td>
+                    <td>{{visit_y['recharge']['pv']}}/{{visit_y['recharge']['uv']}}</td>
+                    <td>{{visit_y['privcenter']['pv']}}/{{visit_y['privcenter']['uv']}}</td>
+                    <td>{{visit_y['search']['pv']}}/{{visit_y['search']['uv']}}</td>
+                    <td>{{visit_y['bkintro']['pv']}}/{{visit_y['bkintro']['uv']}}</td>
+                </tr>
+                <tr>
+                    <td>前日统计</td>
+                    <td>{{visit_l['chosen']['pv']}}/{{visit_l['chosen']['uv']}}</td>
+                    <td>{{visit_l['pub']['pv']}}/{{visit_l['pub']['uv']}}</td>
+                    <td>{{visit_l['boy']['pv']}}/{{visit_l['boy']['uv']}}</td>
+                    <td>{{visit_l['girl']['pv']}}/{{visit_l['girl']['uv']}}</td>
+                    <td>{{visit_l['freebytime']['pv']}}/{{visit_l['freebytime']['uv']}}</td>
+                    <td>{{visit_l['category']['pv']}}/{{visit_l['category']['uv']}}</td>
+                    <td>{{visit_l['rank']['pv']}}/{{visit_l['rank']['uv']}}</td>
+                    <td>{{visit_l['ucenter']['pv']}}/{{visit_l['ucenter']['uv']}}</td>
+                    <td>{{visit_l['recharge']['pv']}}/{{visit_l['recharge']['uv']}}</td>
+                    <td>{{visit_l['privcenter']['pv']}} / {{visit_l['privcenter']['uv']}}</td>
+                    <td>{{visit_l['search']['pv']}}/{{visit_l['search']['uv']}}</td>
+                    <td>{{visit_l['bkintro']['pv']}}/{{visit_l['bkintro']['uv']}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

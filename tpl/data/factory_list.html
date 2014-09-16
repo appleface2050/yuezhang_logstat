@@ -1,0 +1,72 @@
+
+<form id="pagerForm" method="post" action="factory/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+	<input type="hidden" name="group" value="{{group}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factory/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+                <td>
+                    <label>商务分组：</label>
+                    <select name="group" class="required combox">
+                        <option value="">不限</option>
+                        {% for i in groups %}
+                        <option value="{{i}}" {% if group == i %}selected{%end%}>{{i}}</option>
+                        {% end %}
+                    </select>
+                </td>
+				<td>
+					厂商名称：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="factory/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="factory/delete?id={sid_factory}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="factory/edit?id={sid_factory}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">厂商名称</th>				
+				<th width="130" align="center">分组</th>				
+				<th width="220" align="center">邮箱</th>
+				<th width="220" align="center">电话</th>
+				<th width="220" align="center">状态</th>
+				<th width="220" align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for i in factories %}
+				<tr target="sid_factory" rel="{{i.id}}">
+					<td>{{i.id}}</td>
+					<td>{{i.name}}</td>
+					<td>{{i.group}}</td>
+					<td>{{i.email}}</td>
+					<td>{{i.phone}}</td>
+					<td>{% if i.status == 'pas' %}有效{%else%}无效{%end%}</td>
+					<td>{{i.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

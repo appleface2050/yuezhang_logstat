@@ -1,0 +1,84 @@
+
+<form id="pagerForm" method="post" action="book">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="charge_type" value="{{charge_type}}" />
+	<input type="hidden" name="platform_id" value="{{platform_id}}" />
+	<input type="hidden" name="run_id" value="{{run_id}}" />
+	<input type="hidden" name="plan_id" value="{{plan_id}}" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="version_name" value="{{version_name}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="book" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>
+            计费类型：<select name="charge_type">
+                <option value="" {% if not charge_type %}selected{% end %}>不限</option>
+                <option value="book" {% if charge_type == 'book' %}selected{% end %}>按本</option>
+                <option value="chapter" {% if charge_type == 'chapter' %}selected{% end %}>按章</option>
+            </select>
+            </td>
+            <td><a class="icon" href="book?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td>
+            <td colspan="6">提示：点击不同表头，可进行相应排序</td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="108">
+		<thead>
+			<tr>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+				<th align="center">作者</th>
+				<th align="center">版权</th>
+				<th align="center">类别</th>
+				<th align="center">子类</th>
+				<th align="center">三级分类</th>
+				<th align="center">计费类型</th>
+				<th align="center">状态</th>
+				<th align="center" orderField="fee">月饼消费</th>
+				<th align="center" orderField="pay_down">付费下载数</th>
+				<th align="center" orderField="pay_user">付费下载用户数</th>
+				<th align="center" orderField="free_down">免费下载数</th>
+				<th align="center" orderField="free_user">免费下载用户数</th>
+				<th align="center" orderField="pv">简介访问数</th>
+				<th align="center" orderField="uv">简介访问人数</th>
+				<th align="center" orderField="batch_fee">批量订购阅饼消费</th>
+				<th align="center" orderField="batch_pv">批量订购PV</th>
+				<th align="center" orderField="batch_uv">批量订购UV</th>
+			</tr>
+		</thead>
+		<tbody>		
+            {% for i in books%}
+            <tr>
+                <td>{{i['book_id']}}</td>
+                <td>
+                    <a style="color:#1f3b7b;" href="book/chart?book_ids={{i['book_id']}}" target="navTab" rel="book_chart" title="单本数据">
+                    {{i['name']}} </a>
+                </td>
+                <td>{{i['author']}}</td><td>{{i['cp']}}</td>
+                <td>{{i['category_2']}}</td><td>{{i['category_1']}}</td><td>{{i['category_0']}}</td>
+                <td>{% if i.charge_type == 'book' %}按本{%else%}按章{%end%}</td>
+                <td>{{i['state']}}</td>
+                <td>{{i.fee}}</td>
+                <td>{{i.pay_down}}</td><td>{{i.pay_user}}</td>
+                <td>{{i.free_down}}</td><td>{{i.free_user}}</td><td>{{i.pv}}</td><td>{{i.uv}}</td>
+                <td>{{i.batch_fee}}</td><td>{{i.batch_pv}}</td><td>{{i.batch_uv}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

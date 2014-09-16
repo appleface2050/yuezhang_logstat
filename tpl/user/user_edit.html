@@ -1,0 +1,64 @@
+
+<div class="pageContent">
+	<form method="post" action="user/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>用户名称：</label>
+				<input name="name" class="required" type="text" value="{{user.name}}"/>
+				<input type="hidden" name="id" value="{{user.id}}"/>
+			</p>			
+			<p>
+				<label>密码：</label>
+				<input type="password"  value="" name="password" class="textInput">
+			</p>
+			<p>
+				<label>确认密码：</label>
+				<input type="password"  value="" name="confirmPassword" class="textInput" />
+			</p>
+			<p>
+				<label>超级用户：</label>
+				<select name="is_root" class="required combox">
+					<option value="1" {% if user.is_root %}selected="selected"{%end%} >是</option>
+					<option value="0" {% if not user.is_root %}selected="selected"{%end%}>否</option>
+				</select>
+			</p>
+			<p>
+				<label>内部员工：</label>
+				<select name="is_staff" class="required combox">
+					<option value="1" {% if user.is_staff %}selected="selected"{%end%} >是</option>
+					<option value="0" {% if not user.is_staff %}selected="selected"{%end%}>否</option>
+				</select>
+			</p>
+			<p>
+				<label>组织：</label>
+				<select name="orgid" class="required combox">
+                    {% for i in orgs %}
+					<option value="{{i.id}}" {% if i.id == user.orgid %}selected="selected"{%end%}>{{i.full_name}}</option>
+                    {% end %}
+				</select>
+			</p>
+			<p>
+				<label>电子邮箱：</label>
+				<input type="text" name="email" class="email required" size="30" value="{{user.email}}"/>
+			</p>						
+			<p>
+				<label>手机：</label>
+				<input type="text" name="phone" size="30" value="{{user.phone}}"/>
+			</p>
+            <p>
+				<label>角色列表：</label>
+                {% for i in all_roles %}
+                <label><input name="role__{{i.id}}" value="{{i.id}}" type="checkbox" {% if i.id in cur_roles %}checked{%end%}>{{i.name}}</label>
+                {% end %}
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

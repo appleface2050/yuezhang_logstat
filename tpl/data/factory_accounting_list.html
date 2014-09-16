@@ -1,0 +1,61 @@
+
+<form id="pagerForm" method="post" action="factory_accounting/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="name" value="{{name}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factory_accounting/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					厂商名称：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="factory_accounting/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="factory_accounting/delete?id={sid_factory_acc}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="factory_accounting/edit?id={sid_factory_acc}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">开始时间</th>				
+				<th width="130" align="center">厂商id</th>				
+				<th width="220" align="center">厂商名称</th>
+				<th width="220" align="center">系数</th>
+				<th width="220" align="center">修改人</th>
+				<th width="220" align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for i in factories %}
+			    <tr target="sid_factory_acc" rel="{{i.factory_id}}"> 
+                    <td>{{i.id}}</td>
+                    <td>{{i.time}}</td>
+                    <td>{{i.factory_id}}</td>
+					<td>{{i['factory_name']}}</td>
+					<td>{{i.coefficient}}</td>
+					<td>{{i.author}}</td>
+					<td>{{i.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

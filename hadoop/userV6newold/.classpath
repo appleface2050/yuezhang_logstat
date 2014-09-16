@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/logv6/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/commons-email-1.2.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/commons-net-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/hadoop-0.20.2-core.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/libfb303-0.7.0.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/libthrift-0.7.0.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/logv6/lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

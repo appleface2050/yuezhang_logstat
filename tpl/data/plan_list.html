@@ -1,0 +1,26 @@
+
+<form id="pagerForm" method="post" action="plan/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="orderField" value="id" />
+</form>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">方案ID</th>
+				<th align="center">方案名称</th>				
+			</tr>
+		</thead>
+		<tbody>		
+           {% for p in plans %}
+            <tr>
+                <td>{{p['id']}}</td>
+                <td>{{p['name']}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+</div>
+

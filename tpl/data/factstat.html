@@ -1,0 +1,118 @@
+<form id="pagerForm" method="post" action="basic/partner">
+    <input type="hidden" name="start" value="{{start}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+    <input type="hidden" name="product_name" value="{{product_name}}" />
+    <input type="hidden" name="version_name" value="{{version_name}}" />
+    <input type="hidden" name="factory_id" value="{{factory_id}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factstat?query_mode=basic" method="post">
+    {% module FactoryQueryCondWithVersionName(factory_list,factory_id,product_name,version_name,query_mode,start,date) %}
+	</form>
+</div>
+<script type="text/javascript">
+$(function () {
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'container_chart',
+          type: 'line',
+          marginRight: 130,
+          marginBottom: 25
+      },
+      title: {
+          text: '基本统计',
+          x: -20 //center
+      },
+      subtitle: {
+          text: '{{ start }} to {{ date }}',
+          x: -20
+      },
+      xAxis: {
+          categories: {{ x_axis }}
+      },
+      yAxis: {
+          title: {
+              text: 'count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          crosshairs: true,
+          shared: true
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+          borderWidth: 0
+      },
+      series: [
+      {% for idx,i in enumerate(results) %}
+      {
+          name: '{{ results[i]['title'] }}',
+          {% if results[i]['title'] not in ('启动用户','访问用户')%}
+          visible:false,
+          {% end %}
+          data: [{{ results[i]['data'] }}]
+      }{% if idx != len(results)-1 %},{%end%} 
+      {% end %}
+      ]
+    });
+});
+</script>
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_chart" style="min-width: 400px; height: 330px; margin: 0 auto"></div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li>
+                <a class="icon" href="factstat?query_mode=basic&action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"> 
+                <span>导出EXCEL</span></a></li>
+            <li class="line">line</li>
+        </ul>
+    </div> 
+    </table>
+    <table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">时间</th><th align="center">启动用户</th><th align="center">新增启动</th>
+                <th align="center">访问用户</th><th align="center">新增访问</th><th align="center">付费用户</th>
+                <th align="center">活跃用户</th><th align="center">访问PV</th>
+                <th align="center">按章付费</th><th align="center">按本付费</th>
+                <th align="center">按章付费用户</th><th align="center">按本付费用户</th>
+                <th align="center">按章免费</th><th align="center">按本章免费</th>
+                <th align="center">按章免费用户</th><th align="center">按本免费用户</th>
+                {% if has_perm('query','factstat:recharge') and not version_name %}
+                <th align="center">消费</th>                                                                                                                       
+                {% end %}
+            </tr>
+		</thead>
+		<tbody>		
+            {% for i in basics %}
+            <tr>
+                <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+                <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+                <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td><td>{{i['cpay_user']}}</td>
+                <td>{{i['bpay_user']}}</td><td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+                <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+                {% if has_perm('query','factstat:recharge') and not version_name %}
+                <td>{{i['feesum']}}</td>
+                {% end %}
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+</div>
+</div>
+

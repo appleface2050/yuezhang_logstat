@@ -1,0 +1,59 @@
+
+<form id="pagerForm" method="post" action="wap/factorystat">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="factory_name" value="{{factory_name}}" />
+    <input type="hidden" name="start" value="{{start}}" />
+    <input type="hidden" name="date" value="{{date}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="wap/factorystat" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>开始：
+                <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+            </td>
+            <td>结束：
+                <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+            </td>
+            <td>厂商名称：<input type="text" name="factory_name" size="50" value="{{factory_name}}"/>
+            <td colspan="6"></td>           
+            </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">厂商名称</th>
+				<th align="center">首访PV</th>
+				<th align="center">访问PV</th>
+				<th align="center">付费人数</th>
+                <th align="center">充值消费</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['time']}}</td>
+                <td align=“center”>{{i['factory_name']}}</td>
+                <td align=“center”>{{i['first_visits']}}</td>
+                <td align=“center”>{{i['visits']}}</td>
+                <td align=“center”>{{i['pay_user']}}</td>
+                <td align=“center”>{{i['fee']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

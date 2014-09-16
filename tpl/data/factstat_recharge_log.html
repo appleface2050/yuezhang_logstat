@@ -1,0 +1,63 @@
+
+<form id="pagerForm" method="post" action="factstat?query_mode={{query_mode}}">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="phone" value="{{phone}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+	<input type="hidden" name="date" value="{{date}}" />
+</form>
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factstat?query_mode={{query_mode}}" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td> 手机号：
+                <input type="text" name="phone" size="13" value="{{phone}}"/> 
+            </td>
+            <td> 开始：
+                <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+            </td>
+            <td> 结束：
+                <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+            </td>
+            <td colspan="6">{%if is_show==True%}提示:最多可查询90日充值记录{%else%}<font color="red">今日查询次数已达到最大限制{%end%}</td>
+            <td>
+                <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+            </td>
+            </tr>
+        </table>
+    </div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">电话</th>
+                <th align="center">手机型号</th>
+                <th align="center">充值金额</th>
+                <th align="center">充值前金额</th>
+                <th align="center">充值后金额</th>
+                <th align="center">充值时间</th>
+                <th align="center">到账时间</th>
+                <th align="center">充值状态</th>
+            </tr>
+		</thead>
+		<tbody>
+            {% for result in recharge_log %}
+            <tr>
+                <td align='center'>{{result['phone']}}</td>
+                <td align='center'>{{result['phone_model']}}</td>
+                <td align='center'>{{result['amount']}}</td>
+                <td align='center'>{{result['before_amount']}}</td>
+                <td align='center'>{{result['after_amount']}}</td>
+                <td align='center'>{{result['submit_time']}}</td>
+                <td align='center'>{{result['to_account_time']}}</td>
+                <td align='center'>{%if result['status']=='1'%}成功{%else%}失败{%end%}</td>
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

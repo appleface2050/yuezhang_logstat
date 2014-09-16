@@ -1,0 +1,30 @@
+
+<div class="pageContent">
+	<form method="post" action="run/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">			
+			<p style="width:480;">
+				<label>运行平台ID：</label>
+				<input name="run_id" class="required" type="text" size=50 />
+			</p>
+			<p style="width:480;">
+				<label>运行平台名称：</label>
+				<input name="run_name" class="required" type="text" size=50 />
+			</p>
+			<p style="width:480;">
+				<label>状态</label>
+				<select name="status" class="required combox">
+					<option value="pas">有效</option>
+					<option value="hide">无效</option>
+				</select>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

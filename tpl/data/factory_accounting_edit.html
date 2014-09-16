@@ -1,0 +1,27 @@
+
+<div class="pageContent">
+	<form method="post" action="factory_accounting/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">			
+			<p style="width:480;">
+				<label>厂商id：</label>
+				<input name="factory_id" class="required" type="text" size=50 value={{factory.factory_id}}>
+			</p>
+			<p style="width:480;">
+				<label>开始时间：</label>
+				<input name="time" type="text" size=50 value={{factory.time}}>
+			</p>
+		    <p style="width:480;">
+				<label>系数：</label>
+				<input name="coefficient" type="text" size=50 value={{factory.coefficient}}>
+			</p>
+        </div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

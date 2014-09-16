@@ -1,0 +1,64 @@
+
+<form id="pagerForm" method="post" action="e_value/charge_by_book">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="book_ids" value="{{book_ids}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="e_value/charge_by_book" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>书的ID：<input type="text" name="book_ids" size="50" value="{{book_ids}}"/>&nbsp;半角逗号分隔
+                <td><a class="icon" href="e_value/charge_by_book?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td>
+                <td colspan="6"></td></td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+				<th align="center" orderField="fee">本月饼消费</th>
+				<th align="center" orderField="free_user">免费用户数</th>
+				<th align="center" orderField="pay_user">付费用户数</th>
+                <th align="center" orderField="uv">UV</th>
+				<th align="center" orderField="e_val">E值</th>
+				<th align="center" orderField="e_val_1wk">一周E值</th>
+				<th align="center" orderField="e_val_4wk">四周E值</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in books %}
+            <tr>
+                <td align=“center”>{{i['book_id']}}</td>
+                <td>                                                                                                                                                
+                    <a style="color:#1f3b7b;" href="book/chart?book_ids={{i['book_id']}}" target="navTab" rel="book_chart" title="单本数据">{{i['name']}} </a>
+                </td>
+                <td align=“center”>{{i['fee']}}</td>
+                <td align=“center”>{{i['free_user']}}</td>
+                <td align=“center”>{{i['pay_user']}}</td>
+                <td align=“center”>{{i['uv']}}</td>
+                <td align=“center”>{{i['e_val']}}</td>
+                <td align=“center”>{{i['e_val_1wk']}}</td>
+                <td align=“center”>{{i['e_val_4wk']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+

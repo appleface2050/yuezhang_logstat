@@ -1,0 +1,59 @@
+
+<form id="pagerForm" method="post" action="book/bookcategory">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="charge_type" value="{{charge_type}}" />
+	<input type="hidden" name="platform_id" value="{{platform_id}}" />
+	<input type="hidden" name="run_id" value="{{run_id}}" />
+	<input type="hidden" name="plan_id" value="{{plan_id}}" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="version_name" value="{{version_name}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="start" value="{{start}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="book/bookcategory" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>
+            计费类型：<select name="charge_type">
+                <option value="" {% if not charge_type %}selected{% end %}>不限</option>
+                <option value="book" {% if charge_type == 'book' %}selected{% end %}>按本</option>
+                <option value="chapter" {% if charge_type == 'chapter' %}selected{% end %}>按章</option>
+            </select>
+            </td>
+             <td><a class="icon" href="book/bookcategory?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td> 
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="108">
+		<thead>
+			<tr>
+				<th align="center">类别</th>
+				<th align="center">二级分类</th>
+				<th align="center">三级分类</th>
+				<th align="center">阅饼消费</th>
+				<th align="center">批量下载阅饼消费</th>
+			</tr>
+		</thead>
+		<tbody>		
+            {% for i in cates%}
+            <tr>
+                <td>{{i['category_no3']}}</td>
+                <td>{{i['category_no2']}}</td>
+                <td>{{i['category_no1']}}</td>
+                <td>{{i['fee']}}</td>
+                <td>{{i['batch_fee']}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+</div>
+

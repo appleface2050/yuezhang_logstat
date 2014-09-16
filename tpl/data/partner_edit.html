@@ -1,0 +1,26 @@
+
+<div class="pageContent">
+	<form method="post" action="partner/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p style="width:480;">
+				<label>渠道ID：</label>
+				<input name="partner_id" class="required" type="text" size=50 value="{{partner.partner_id}}"/>
+				<input type="hidden" name="pid" value="{{partner.id}}"/>
+			</p>
+			<p style="width:480;">
+				<label>厂商：</label>
+			    <input class="required" name="factory_name" type="text" postField="factory_name"
+                    suggestFields="factory_name" suggestUrl="factory/search" lookupGroup=""/>
+            </p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+

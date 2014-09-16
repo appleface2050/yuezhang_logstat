@@ -1,0 +1,37 @@
+
+<div class="pageContent">
+	<form method="post" action="perm/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">			
+			<p>
+				<label>权限名称：</label>
+				<input name="name" class="required" type="text"/>
+			</p>
+			<p>
+				<label>操作：</label>
+				<select name="oper" class="required combox">
+					<option value="all">所有</option>
+					<option value="add">添加</option>
+					<option value="update">修改</option>
+					<option value="delete">删除</option>
+					<option value="query" selected='selected'>查询</option>
+				</select>
+			</p>
+			<p>
+				<label>资源：</label>
+				<select name="resource_id" class="required combox">
+                {% for i in resources %}
+					<option value="{{i.id}}">{{i.nick}}</option>
+                {% end %}
+				</select>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

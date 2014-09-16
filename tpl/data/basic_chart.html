@@ -1,0 +1,111 @@
+
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="basic/{{mode}}" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+    </form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+      chart = new Highcharts.Chart({
+          chart: {
+              renderTo: 'container_basic_chart',
+              type: 'line',
+              marginRight: 130,
+              marginBottom: 25
+          },
+          title: {
+              text: '基本统计',
+              x: -20 //center
+          },
+          subtitle: {
+              text: {% if mode == 'week' %}'最近一周'{% elif mode=='month' %}'最近一月'{% end %},
+              x: -20
+          },
+          xAxis: {
+              categories: {{ x_axis }}
+          },
+          yAxis: {
+              title: {
+                  text: 'count'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              crosshairs: true,
+              shared: true
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'top',
+              x: -10,
+              y: 100,
+              borderWidth: 0
+          },
+          series: [
+          {% for idx,i in enumerate(results) %}
+          {
+              name: '{{ results[i]['title'] }}',
+              {% if results[i]['title'] not in ('按本月饼消费','按章月饼消费','批量下载消费')%}
+              visible:false,
+              {% end %}
+              data: [{{ results[i]['data'] }}]
+          }{% if idx != len(results)-1 %},{%end%}
+          {% end %}
+          ]
+      });
+});
+</script>
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_basic_chart" style="min-width: 400px; height: 360px; margin: 0 auto 10px;"></div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li>
+                <a class="icon" href="basic/{{mode}}?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?">
+                <span>导出EXCEL</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+        <tr>
+            <th width="80" align="center">时间</th><th width="60" align="center">启动用户</th><th width="60" align="center">新增启动用户</th>
+            <th width="60" align="center">访问用户</th><th width="60" align="center">新增访问用户</th><th width="60" align="center">付费用户</th>
+            <th width="60" align="center">活跃用户</th><th width="60" align="center">访问PV</th>
+            <th width="65" align="center">章付费数</th><th width="60" align="center">本付费数</th>
+            <th width="60" align="center">章付费用户</th> <th width="60" align="center">本付费用户</th>
+            <th width="65" align="center">章免费数</th> <th width="60" align="center">本免费数</th>
+            <th width="60" align="center">章免费用户</th> <th width="60" align="center">本免费用户</th>
+            <th width="60" align="center">章月饼消费</th><th width="60" align="center">本月饼消费</th>              
+            <th width="60" align="center">批量订购阅饼消费</th><th width="60" align="center">批量订购PV</th>              
+            <th width="60" align="center">批量订购UV</th> 
+        </tr>
+		</thead>
+		<tbody>		
+        {% for i in basics %}
+        <tr>
+            <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+            <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+            <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+            <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td>
+            <td>{{i['cpay_user']}}</td><td>{{i['bpay_user']}}</td>
+            <td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+            <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+            <td>{{i['cfee']}}</td><td> {{i['bfee']}}</td>
+            <td>{{i['batch_fee']}}</td><td> {{i['batch_pv']}}</td>
+            <td>{{i['batch_uv']}}</td>
+        </tr>
+        {% end %}
+		</tbody>
+    </table>
+</div>
+</div>
+

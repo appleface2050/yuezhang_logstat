@@ -1,0 +1,65 @@
+
+<form id="pagerForm" method="post" action="operation/qiandao_level">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="date" value="{{date}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="operation/qiandao_level" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td><a class="icon" href="operation/qiandao_level?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+				<th align="center">时间</th>
+				<th align="center">等级</th>
+				<th align="center">6月饼</th>
+				<th align="center">11月饼</th>
+                <th align="center">16月饼</th>
+				<th align="center">21月饼</th>
+				<th align="center">26月饼</th>
+				<th align="center">52月饼</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['ds']}}</td>
+                <td align=“center”>{{i['level']}}</td>
+                <td align=“center”>{{i['card6']}}</td>
+                <td align=“center”>{{i['card11']}}</td>
+                <td align=“center”>{{i['card16']}}</td>
+                <td align=“center”>{{i['card21']}}</td>
+                <td align=“center”>{{i['card26']}}</td>
+                <td align=“center”>{{i['card52']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

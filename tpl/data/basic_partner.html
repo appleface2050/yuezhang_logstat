@@ -1,0 +1,49 @@
+<form id="pagerForm" method="post" action="basic/partner">
+    <input type="hidden" name="orderField" value="{{order_field}}" />
+    <input type="hidden" name="pageNum" value="1" />
+    <input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="version_name" value="{{version_name}}" />
+    <input type="hidden" name="partner_id" value="{{partner_id}}" />
+</form>
+
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="basic/partner" method="post">
+    {% module BasicPartnerQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date) %}
+    </form>
+</div>
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="98">
+		<thead>
+        <tr>
+            <th align="center">渠道号</th><th align="center" orderField="user_run">启动用户</th><th align="center" orderField="new_user_run">新增启动用户</th>
+            <th align="center" orderField="user_visit">访问用户</th><th align="center" orderField="new_user_visit">新增访问用户</th><th align="center" orderField="pay_user">付费用户</th>
+            <th align="center" orderField="active_user_visit">活跃用户</th><th align="center" orderField="visits">访问PV</th>
+            <th align="center" orderField="cpay_down">章付费数</th><th align="center" orderField="bpay_down">本付费数</th>
+            <th align="center" orderField="cpay_user">章付费用户</th> <th align="center" orderField="bpay_down">本付费用户</th>
+            <th align="center" orderField="cfree_down">章免费数</th> <th align="center" orderField="bfree_down">本免费数</th>
+            <th align="center" orderField="cfree_user">章免费用户</th> <th align="center" orderField="cpay_user">本免费用户</th>
+            <th align="center" orderField="cfee">章月饼消费</th><th align="center" orderField="bfee">本月饼消费</th>                
+            <th align="center" orderField="batch_fee">批量订购阅饼消费</th><th align="center" orderField="batch_pv">批量订购PV</th><th align="center" orderField="batch_uv">批量订购UV</th>              
+        </tr>
+		</thead>
+		<tbody>		
+        {% for partner in partner_stat %}
+        <tr>
+            <td align="center">{{partner['partner_id']}}</td><td align="center">{{partner['user_run']}}</td><td align="center">{{partner['new_user_run']}}</td>
+            <td align="center">{{partner['user_visit']}}</td><td align="center">{{partner['new_user_visit']}}</td><td align="center">{{partner['pay_user']}}</td>
+            <td align="center">{{partner['active_user_visit']}}</td><td align="center">{{partner['visits']}}</td>
+            <td align="center">{{partner['cpay_down']}}</td><td align="center">{{partner['bpay_down']}}</td>
+            <td align="center">{{partner['cpay_user']}}</td><td align="center">{{partner['bpay_user']}}</td>
+            <td align="center">{{partner['cfree_down']}}</td><td align="center">{{partner['bfree_down']}}</td>
+            <td align="center">{{partner['cfree_user']}}</td><td align="center">{{partner['cpay_user']}}</td>
+            <td align="center">{{partner['cfee']}}</td><td align="center">{{partner['bfee']}}</td>
+            <td align="center">{{partner['batch_fee']}}</td><td align="center">{{partner['batch_pv']}}</td><td align="center">{{partner['batch_uv']}}</td>
+        </tr>
+        {% end %}
+		</tbody>
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+</div>

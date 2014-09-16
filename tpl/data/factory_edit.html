@@ -1,0 +1,48 @@
+
+<div class="pageContent">
+	<form method="post" action="factory/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p style="width:480;">
+				<label>厂商名称：</label>
+				<input name="name" class="required" type="text" size=50 value={{factory.name}} />
+				<input type="hidden" name="id" value="{{factory.id}}"/>
+			</p>
+			<p>
+				<label>分组：</label>
+				<select name="group" class="required combox">
+                    {% for i in groups %}
+					<option value="{{i}}" {% if factory.group == i %}selected{%end%}>{{i}}</option>
+                    {% end %}
+				</select>
+			</p>
+			<p style="width:480;">
+				<label>email：</label>
+				<input name="email" type="text" size=50 value="{{factory.email}}"/>
+			</p>
+			<p style="width:480;">
+				<label>电话：</label>
+				<input name="phone" type="text" size=50 value="{{factory.phone}}"/>
+			</p>
+			<p style="width:480;">
+				<label>简介：</label>
+				<input name="intro" type="text" size=50 value="{{factory.intro}}"/>
+			</p>
+			<p style="width:480;">
+				<label>状态</label>
+				<select name="status" class="required combox">
+					<option value="pas" {% if factory.status == 'pas' %}selected{%end%}>有效</option>
+					<option value="hide" {% if factory.status == 'hide' %}selected{%end%}>无效</option>
+				</select>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+

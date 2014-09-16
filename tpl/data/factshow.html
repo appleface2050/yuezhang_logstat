@@ -1,0 +1,58 @@
+<form id="pagerForm" method="post" action="factshow">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factshow" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+            <th align="center">时间</th><th align="center">厂商名称</th><th align="center">启动用户</th><th align="center">新增启动用户</th>
+            <th align="center">访问用户</th><th align="center">新增访问用户</th><th align="center">付费用户</th>
+            <th align="center">活跃用户</th><th align="center">访问PV</th>
+            <th align="center">章付费数</th><th align="center">本付费数</th>
+            <th align="center">章付费用户</th> <th align="center">本付费用户</th>
+            <th align="center">章免费数</th> <th align="center">本免费数</th>
+            <th align="center">章免费用户</th> <th align="center">本免费用户</th>
+            <th align="center">章月饼消费</th><th align="center">本月饼消费</th>              
+            </tr>
+		</thead>
+		<tbody>
+        {% for i in basics %}
+        <tr>
+            <td>{{i['time']}}</td><td>{{i['factory_name']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+            <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+            <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+            <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td>
+            <td>{{i['cpay_user']}}</td><td>{{i['bpay_user']}}</td>
+            <td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+            <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+            <td>{{i['cfee']}}</td><td> {{i['bfee']}}</td>
+        </tr>
+        {% end %}
+        </tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

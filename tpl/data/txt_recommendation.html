@@ -1,0 +1,74 @@
+
+<form id="pagerForm" method="post" action="operation/txt_recommendation">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="date" value="{{date}}" /> 
+    <input type="hidden" name="book_id" value="{{book_id}}" />
+    <input type="hidden" name="orderField" value="{{order_field}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="operation/txt_recommendation" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td> 开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td> 结束：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>
+                    书ID：<input type="text" name="book_id" size="30" value="{{book_id}}"/>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+				<th align="center">作者</th>
+				<th align="center">版权</th>
+				<th align="center">类别</th>
+				<th align="center">子类</th>
+				<th align="center">三级分类</th>
+				<th align="center">状态</th>
+				<th align="center" orderField="pv">简介访问数</th>
+				<th align="center" orderField="uv">简介访问人数</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['time']}}</td>
+                <td align=“center”>{{i['book_id']}}</td>
+                <td align=“center”>{{i['name']}}</td>
+                <td align=“center”>{{i['author']}}</td>
+                <td align=“center”>{{i['cp']}}</td>
+                <td align=“center”>{{i['category_2']}}</td>
+                <td align=“center”>{{i['category_1']}}</td>
+                <td align=“center”>{{i['category_0']}}</td>
+                <td align=“center”>{{i['state']}}</td>
+                <td align=“center”>{{i['pv']}}</td>
+                <td align=“center”>{{i['uv']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

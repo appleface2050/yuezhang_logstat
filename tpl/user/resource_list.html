@@ -1,0 +1,60 @@
+
+<form id="pagerForm" method="post" action="resource/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="resource/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					资源名：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="resource/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="resource/delete?id={sid_resource}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="resource/edit?id={sid_resource}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">序号</th>
+				<th align="center">名称</th>
+				<th align="center">描述</th>
+				<th align="center">分组</th>
+				<th align="center">属性</th>
+				<th align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+           {% for r in resources%}
+            <tr target="sid_resource" rel="{{r.id}}">
+                <td>{{r.id}}</td>
+                <td>{{r.name}}</td>
+                <td>{{r.nick}}</td>
+                <td>{{r.group}}</td>
+                <td>{{r.attr}}</td>
+                <td>{{r.uptime}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

@@ -1,0 +1,90 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="arpu" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date,start=start) %}
+    </form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+      chart = new Highcharts.Chart({
+          chart: {
+              renderTo: 'container_arpu_chart',
+              type: 'line',
+              marginRight: 130,
+              marginBottom: 25
+          },
+          title: {
+              text: 'ARPU分析',
+              x: -20 //center
+          },
+          subtitle: {
+              text: '',
+              x: -20
+          },
+          xAxis: {
+              categories: {{ x_axis }}
+          },
+          yAxis: {
+              title: {
+                  text: 'count'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              crosshairs: true,
+              shared: true
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'top',
+              x: -10,
+              y: 100,
+              borderWidth: 0
+          },
+          series: [
+          {% for idx,i in enumerate(results) %}
+          {
+              name: '{{ results[i]['title'] }}',
+              {% if results[i]['title'] not in ('arpu')%}
+              visible:false,
+              {% end %}
+              data: [{{ results[i]['data'] }}]
+          }{% if idx != len(results)-1 %},{%end%}
+          {% end %}
+          ]
+      });
+});
+</script>
+
+
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_arpu_chart" style="min-width: 400px; height: 360px; margin: 0 auto 10px;"></div>
+    <div class="pageContent">
+        <div class="item_1">
+            <h3 class="title">ARPU统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>时间</th> <th>启动用户</th><th>新增启动用户</th><th>访问用户</th><th>新增访问用户</th>
+                    <th>章付费用户</th><th>可结算收入</th><th>启动ARPU</th><th>nur7arpu</th><th>nur30arpu</th><th>nur90arpu</th>
+                </tr>
+                {% for i in basics %}
+                <tr>
+                    <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                    <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td>
+                    <td>{{i['cpay_user']}}</td><td>{{i['recharge']}}</td><td>{{i['arpu']}}</td><td>{{i['arpu_7days']}}</td>
+                    <td>{{i['arpu_30days']}}</td><td>{{i['arpu_90days']}}</td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+   </div>
+</div>
+

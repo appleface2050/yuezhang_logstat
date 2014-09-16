@@ -1,0 +1,60 @@
+
+<form id="pagerForm" method="post" action="run/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="orderField" value="id" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="run/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					运行平台ID：<input type="text" name="run_id" value="{{run_id}}"/>
+				</td>
+				<td>
+					运行平台名称：<input type="text" name="run_name" value="{{run_name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="run/add" target="dialog"><span>添加</span></a></li>
+			<li><a class="delete" href="run/delete?id={sid_run}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="run/edit?id={sid_run}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="80" align="center">序号</th>
+				<th width="130" align="center">运行平台ID</th>				
+				<th with="220" align="center">运行平台名称</th>
+				<th with="220" align="center">状态</th>
+				<th with="220" align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for r in runs %}
+				<tr target="sid_run" rel="{{r.id}}">
+					<td>{{r.id}}</td>
+					<td>{{r.run_id}}</td>
+					<td>{{r.run_name}}</td>
+					<td>{% if r.status == 'pas' %}有效{%else%}无效{%end%}</td>
+					<td>{{r.uptime}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

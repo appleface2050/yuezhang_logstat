@@ -1,0 +1,53 @@
+
+<form id="pagerForm" method="post" action="factstat?query_mode={{query_mode}}">
+	<input type="hidden" name="pageNum" value="{{page}}" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="usr" value="{{usr}}" />
+</form>
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="factstat?query_mode={{query_mode}}" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td> 用户名：
+                <input type="text" name="usr" size="33" value="{{usr}}"/> 
+            </td>
+            <td colspan="6">{%if is_show==True%}{%else%}<font color="red">今日查询次数已达到最大限制{%end%}</td>
+            <td>
+                <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+            </td>
+            </tr>
+        </table>
+    </div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">书ID</th>
+                <th align="center">书名</th>
+                <th align="center">作者</th>
+                <th align="center">完结状态</th>
+                <th align="center">计费类型</th>
+                <th align="center">月饼消费</th>
+                <th align="center">下载时间</th>
+            </tr>
+		</thead>
+		<tbody>
+            {% for result in obj %}
+            <tr>
+                <td align='center'>{{result['id']}}</td>
+                <td align='center'>{{result['bookName']}}</td>
+                <td align='center'>{{result['bookAuthor']}}</td>
+                <td align='center'>{%if result['completeState']=='Y'%}完结{%else%}未完结{%end%}</td>
+                <td align='center'>{%if result['feeUnit']==20%}按章{%elif result['feeUnit']==10%}按本{%else%}未知{%end%}</td>
+                <td align='center'>{{result['price']}}</td>
+                <td align='center'>{{result['downloadTime']}}</td>
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

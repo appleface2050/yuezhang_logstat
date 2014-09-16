@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="{{ static_url("css/public.form.css") }}" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="{{ static_url("js/jquery-1.7.1.min.js") }}"></script>
+</head>
+<body>
+<div id="wrapper">
+	<header id="global-head"></header>
+	
+	{% block channel-nav %}{% end %}
+
+	<div id="container">
+		{% block body %}{% end %}
+	</div>
+
+	{% block foot %}{% end %}
+	
+</div>
+</body>
+</html>

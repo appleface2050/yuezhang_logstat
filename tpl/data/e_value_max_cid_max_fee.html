@@ -1,0 +1,61 @@
+
+<form id="pagerForm" method="post" action="e_value/max_cid_max_fee">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="{{order_field}}" />
+	<input type="hidden" name="book_ids" value="{{book_ids}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="e_value/max_cid_max_fee" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+            <td>书的ID：<input type="text" name="book_ids" size="50" value="{{book_ids}}"/>&nbsp;半角逗号分隔
+            <td><a class="icon" href="e_value/max_cid_max_fee?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL    </span></a></td>
+            <td colspan="6"></td>           
+            </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+				<th align="center">作者</th>
+				<th align="center">版权</th>
+				<th align="center">类别</th>
+				<th align="center">子类</th>
+				<th align="center">计费类型</th>
+				<th align="center">状态</th>
+				<th align="center" orderField="maxcid">最大章节</th>
+				<th align="center" orderField="maxfee">最大收入</th>
+            </tr>
+		</thead>
+		<tbody>	
+            {% for i in books %}
+            <tr>
+                <td align=“center”>{{i['bid']}}</td>
+                <td>                                                                                                                                             
+                    <a style="color:#1f3b7b;" href="book/chart?book_ids={{i['bid']}}" target="navTab" rel="book_chart" title="单本数据">{{i['name']}} </a>
+                </td>
+                <td align=“center”>{{i['author']}}</td><td>{{i['cp']}}</td>
+                <td align=“center”>{{i['category_0']}}</td><td>{{i['category_1']}}</td>
+                <td align=“center”>{% if i.charge_type == 'book' %}按本{%else%}按章{%end%}</td>
+                <td align=“center”>{{i['state']}}</td>
+                <td align=“center”>{{i['maxcid']}}</td>
+                <td align=“center”>{{i['maxfee']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

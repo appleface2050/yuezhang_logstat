@@ -1,0 +1,72 @@
+
+<div class="pageContent">
+	<form method="post" action="scope/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <input type="hidden" name="id" value="{{scope.id}}"/>
+		<div class="pageFormContent" layoutH="56">			
+			<p>
+				<label>书城版本：</label>
+                <select class="combox" name="platform_id">
+                    <option value="4" {% if scope.platform_id == 4 %}selected{% end %}>四版</option>
+                    <option value="5" {% if scope.platform_id == 5 %}selected{% end %}>五版</option>
+                    <option value="6" {% if scope.platform_id == 6 %}selected{% end %}>六版</option>
+                </select>
+			</p>
+			<p>
+				<label>运行平台：</label>
+                <select class="combox" name="run_id">
+                    <option value="">不限</option>
+                    {% for i in run_list %}
+                    <option value="{{i['run_id']}}" {% if scope.run_id == i.run_id %}selected{% end %}>{{i['run_name']}}</option>
+                    {% end %}
+                </select>
+			</p>
+			<p>
+				<label>渠道ID：</label>
+                <input type="text" name="partner_id" size="12" value="{{scope.partner_id}}"/> 
+			</p>
+			<p>
+				<label>客户端版本：</label>
+                <select class="combox" name="version_name">
+                    <option value="">全部</option>
+                    <option value="ireader_1__6" {% if scope.version_name=='ireader_1.6' %}selected{% end %}>ireader_1.6</option>
+                    <option value="ireader_1__7" {% if scope.version_name=='ireader_1.7' %}selected{% end %}>ireader_1.7</option>
+                    <option value="ireader_1__8" {% if scope.version_name=='ireader_1.8' %}selected{% end %}>ireader_1.8</option>
+                    <option value="ireader_2__0" {% if scope.version_name=='ireader_2.0' %}selected{% end %}>ireader_2.0</option>
+                    <option value="ireader_2__1" {% if scope.version_name=='ireader_2.1' %}selected{% end %}>ireader_2.1</option>
+                    <option value="ireader_2__2" {% if scope.version_name=='ireader_2.2' %}selected{% end %}>ireader_2.2</option>
+                    <option value="ireader_2__3" {% if scope.version_name=='ireader_2.3' %}selected{% end %}>ireader_2.3</option>
+                    <option value="ireader_2__4" {% if scope.version_name=='ireader_2.4' %}selected{% end %}>ireader_2.4</option>
+                    <option value="ireader_2__6" {% if scope.version_name=='ireader_2.6' %}selected{% end %}>ireader_2.6</option>
+                    <option value="ireader_2__7" {% if scope.version_name=='ireader_2.7' %}selected{% end %}>ireader_2.7</option>
+                    <option value="ireader_3__0" {% if scope.version_name=='ireader_3.0' %}selected{% end %}>ireader_3.0</option>
+                    <option value="ireader_3__1" {% if scope.version_name=='ireader_3.1' %}selected{% end %}>ireader_3.1</option>
+                    <option value="ireader_3__2" {% if scope.version_name=='ireader_3.2' %}selected{% end %}>ireader_3.2</option>
+                </select>
+			</p>
+			<p>
+				<label>机型：</label>
+                <input type="text" name="product_name" size="12" value="{{scope.product_name}}"/> 
+			</p>
+            <p>
+                <label>统计类型：</label>
+                {% for i in mask %}
+                <label style="width:65px;"><input name="mask__{{i}}" value="{{i}}" type="checkbox" {% if i in scope.mask %}checked{%end%}>{{mask[i]}}</label>
+                {% end %}
+            </p>
+            <p>
+                <label>统计时间：</label>
+                {% for i in modes %}
+                <label style="width:65px;"><input name="mode__{{i}}" value="{{i}}" type="checkbox" {% if i in scope.modes %}checked{%end%}>{{modes[i]}}</label>
+                {% end %}
+            </p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,37 @@
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="ios_basic/basic" method="post">
+    {% module IOSBasicQueryCond(run_id,partner_id,run_list,date) %}
+	</form>
+</div>
+<div class="pageContent">
+	<div class="fixed" style="overflow:auto;height:420px;">
+        <div class="item_1">
+            <h3 class="title">基本统计</h3>
+            <table class="dataTable">
+                <tr>
+                    <th>时间</th> <th>启动用户</th><th>新增启动用户</th><th>访问用户</th><th>新增访问用户</th>
+                    <th>付费用户</th> <th>活跃用户</th><th>访问PV</th><th>章付费数</th><th>本付费数</th>
+                    <th>章付费用户</th><th>本付费用户</th><th>章免费数</th><th>本免费数</th>
+                    <th>章免费用户</th><th>本免费用户</th><th>章阅饼消费</th><th>本月饼消费</th>              
+                    <th>批量订购阅饼消费</th><th>批量订购PV</th><th>批量订购UV</th>              
+                </tr>
+                {% for i in basics %}
+                <tr>
+                    <td>{{i['title']}}</td><td>{{i['user_run']}}</td><td>{{i['new_user_run']}}</td>
+                    <td>{{i['user_visit']}}</td><td>{{i['new_user_visit']}}</td><td>{{i['pay_user']}}</td>
+                    <td>{{i['active_user_visit']}}</td><td>{{i['visits']}}</td>
+                    <td>{{i['cpay_down']}}</td><td>{{i['bpay_down']}}</td>
+                    <td>{{i['cpay_user']}}</td><td>{{i['bpay_user']}}</td>
+                    <td>{{i['cfree_down']}}</td><td>{{i['bfree_down']}}</td>
+                    <td>{{i['cfree_user']}}</td><td>{{i['bfree_user']}}</td>
+                    <td>{{i['cfee']}}</td><td>{{i['bfee']}}</td>
+                    <td>{{i['batch_fee']}}</td><td>{{i['batch_pv']}}</td><td>{{i['batch_uv']}}</td>
+
+                </tr>
+                {% end %}
+            </table>
+        </div>
+   </div>
+</div>
+

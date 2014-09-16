@@ -1,0 +1,44 @@
+
+<div class="pageContent">
+	<form method="post" action="perm/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>权限名称：</label>
+				<input name="name" class="required" type="text" value="{{perm.name}}"/>
+				<input type="hidden" name="id" value="{{perm.id}}"/>
+			</p>
+			<p>
+				<label>操作：</label>
+				<select name="oper" class="required combox">
+					<option value="all" {% if perm.oper == 'all' %}selected{%end%}>所有</option>
+					<option value="add" {% if perm.oper == 'add' %}selected{%end%}>添加</option>
+					<option value="update" {% if perm.oper == 'update' %}selected{%end%}>修改</option>
+					<option value="delete" {% if perm.oper == 'delete' %}selected{%end%}>删除</option>
+					<option value="query" {% if perm.oper == 'query' %}selected{%end%}>查询</option>
+				</select>
+			</p>
+			<p>
+				<label>资源：</label>
+				<select name="resource_id" class="required combox">
+                {% for i in resources %}
+					<option value="{{i.id}}" {% if perm.resource_id == i.id %}selected{%end%}>{{i.nick}}</option>
+                {% end %}
+				</select>
+                {% for i in perm_attr %}
+			    <p>
+                    <label>{{i}}：</label>
+                    <input name="{{i}}" type="text" value="{{perm_attr[i]}}"/>
+			    </p>
+                {% end %}
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,140 @@
+
+<form id="pagerForm" method="post" action="moniter">
+    <input type="hidden" name="start" value="{{start}}" /> 
+    <input type="hidden" name="end" value="{{end}}" /> 
+    <input type="hidden" name="version_name" value="{{version_name}}" /> 
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="moniter" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>开始：
+                    <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                </td>
+                <td>结束：
+                    <input name="end" class="date textInput readonly valid" readonly="true" type="text" value="{{end}}">
+                </td>
+                <td> ireader：
+                <select name="version_name">
+                    <option value="">不限</option>
+                    <option value="ireader_1__6" {% if version_name=='ireader_1.6' %}selected{% end %}>1.6</option>
+                    <option value="ireader_1__7" {% if version_name=='ireader_1.7' %}selected{% end %}>1.7</option>
+                    <option value="ireader_1__8" {% if version_name=='ireader_1.8' %}selected{% end %}>1.8</option>
+                    <option value="ireader_2__0" {% if version_name=='ireader_2.0' %}selected{% end %}>2.0</option>
+                    <option value="ireader_2__1" {% if version_name=='ireader_2.1' %}selected{% end %}>2.1</option>
+                    <option value="ireader_2__2" {% if version_name=='ireader_2.2' %}selected{% end %}>2.2</option>
+                    <option value="ireader_2__3" {% if version_name=='ireader_2.3' %}selected{% end %}>2.3</option>
+                    <option value="ireader_2__6" {% if version_name=='ireader_2.6' %}selected{% end %}>2.6</option>
+                    <option value="ireader_2__7" {% if version_name=='ireader_2.7' %}selected{% end %}>2.7</option>
+                    <option value="ireader_3__0" {% if version_name=='ireader_3.0' %}selected{% end %}>3.0</option>
+                    <option value="ireader_3__1" {% if version_name=='ireader_3.1' %}selected{% end %}>3.1</option>
+                    <option value="ireader_3__2" {% if version_name=='ireader_3.2' %}selected{% end %}>3.2</option>
+                </select>
+                </td>
+ 
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'container_moniter_chart',
+          type: 'line',
+          marginRight: 130,
+          marginBottom: 25
+      },
+      title: {
+          text: '数据监控',
+          x: -20 //center
+      },
+      subtitle: {
+          text: '{{ start }} to {{ end }}',
+          x: -20
+      },
+      xAxis: {
+          categories: {{ x_axis }}
+      },
+      yAxis: {
+          title: {
+              text: 'count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          crosshairs: true,
+          shared: true
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+          borderWidth: 0
+      },
+      series: [
+      {% for idx, i in enumerate(res_start.keys()) %}
+      {
+          name: '{{fielddesc_start[i]}}',
+          data: {{res_start[i]}}
+      }, 
+      {% end %}
+
+      {% for idx, i in enumerate(res_end.keys()) %}
+      {
+          name: '{{fielddesc_end[i]}}',
+          data: {{res_end[i]}}
+      }{% if idx != len(res_end.keys())-1 %},{%end%} 
+      {% end %}
+
+]
+    });
+});
+</script>
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="container_moniter_chart" style="min-width: 400px; height: 330px; margin: 0 auto"></div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">版本</th>
+				<th align="center">小时</th>
+				<th align="center">启动用户</th>
+                <th align="center">访问用户</th>
+				<th align="center">收益</th>
+				<th align="center">访问用户arpu</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for i in range(0,24)%}
+            <tr>
+                <td align=“center”>{{result['start'][i]['ds']}} / {{result['end'][i]['ds']}}</td>
+                <td align=“center”>{{result['start'][i]['version_name']}}</td>
+                <td align=“center”>{{result['start'][i]['hour']}}</td>
+                <td align=“center”>{{result['start'][i]['run']}} / {{result['end'][i]['run']}}</td>
+                <td align=“center”>{{result['start'][i]['visit']}} / {{result['end'][i]['visit']}}</td>
+                <td align=“center”>{{result['start'][i]['fee']}} / {{result['end'][i]['fee']}}</td>
+                <td align=“center”>{{result['start'][i]['arpu']}} / {{result['end'][i]['arpu']}}</td>
+            </tr>
+            {% end %}
+	    </tbody>
+	</table>
+</div>
+
+
+

@@ -1,0 +1,45 @@
+
+<form id="pagerForm" method="post" action="topn">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="platform_id" value="{{platform_id}}" />
+	<input type="hidden" name="run_id" value="{{run_id}}" />
+	<input type="hidden" name="plan_id" value="{{plan_id}}" />
+	<input type="hidden" name="partner_id" value="{{partner_id}}" />
+	<input type="hidden" name="version_name" value="{{version_name}}" />
+	<input type="hidden" name="product_name" value="{{product_name}}" />
+	<input type="hidden" name="date" value="{{date}}" />
+	<input type="hidden" name="top_type" value="{{top_type}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="topn" method="post">
+    {% module BasicQueryCond(platform_id,run_id,plan_id,partner_id,version_name,product_name,run_list,plan_list,date) %}
+	<input type="hidden" name="top_type" value="{{top_type}}" />
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+		<thead>
+			<tr>
+				<th width="180" align="center">序号</th>
+				<th width="180" align="center">类型</th>				
+				<th width="180" align="center">值</th>				
+				<th width="180" align="center">访问次数</th>
+				<th width="180" align="center">访问人次</th>
+			</tr>
+		</thead>
+		<tbody>		
+            {% for i in results %}
+            <tr>
+                <td>{{i['no']}}</td><td>{{TOP_DICT[i['type']][2]}}</td><td>{{i['value']}}</td>
+                <td>{{i.pv}}</td><td>{{i.uv}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

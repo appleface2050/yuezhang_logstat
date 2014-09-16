@@ -1,0 +1,96 @@
+<form id="pagerForm" method="post" action="wap/wapbookstat">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="date" value="{{date}}" /> 
+    <input type="hidden" name="partner_id" value="{{partner_id}}" /> 
+    <input type="hidden" name="wap_type" value="{{wap_type}}" /> 
+    <input type="hidden" name="charge_type" value="{{charge_type}}" /> 
+</form>
+
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="wap/wapbookstat" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>日期：
+                    <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                </td>
+                <td>wap类型：
+                    <select name="wap_type">
+                        <option value="" {% if not wap_type %}selected{% end %}>不限</option>
+                        <option value="touch" {% if wap_type == 'touch' %}selected{% end %}>touch</option>
+                        <option value="basic" {% if wap_type == 'basic' %}selected{% end %}>basic</option>
+                    </select>
+                </td>
+                <td>
+                    计费类型：<select name="charge_type">
+                    <option value="" {% if not charge_type %}selected{% end %}>不限</option>
+                    <option value="book" {% if charge_type == 'book' %}selected{% end %}>按本</option>
+                    <option value="chapter" {% if charge_type == 'chapter' %}selected{% end %}>按章</option>
+                    </select>
+                </td>
+                <td> 渠道ID：<input type="text" name="partner_id" size="16" value="{{partner_id}}"/> </td>
+                <td><a class="icon" href="wap/wapbookstat?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"><span>导出EXCEL</span></a></td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="90">
+		<thead>
+			<tr>
+				<th align="center">日期</th>
+				<th align="center">书ID</th>
+				<th align="center">书名</th>
+                <th align="center">作者</th>
+				<th align="center">版权</th>
+				<th align="center">类别</th>
+				<th align="center">子类</th>
+				<th align="center">wap类型</th>
+				<th align="center">计费类型</th>
+				<th align="center">状态</th>
+				<th align="center">月饼消费</th>
+				<th align="center">付费订购数</th>
+				<th align="center">付费用户数</th>
+				<th align="center">访问UV</th>
+				<th align="center">登陆UV</th>
+				<th align="center">访问PV</th>
+				<th align="center">阅读PV</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{date}}</td>
+                <td align=“center”>{{i['book_id']}}</td>
+                <td align=“center”>{{i['name']}}</td>
+                <td align=“center”>{{i['author']}}</td>
+                <td align=“center”>{{i['cp']}}</td>
+                <td align=“center”>{{i['category_0']}}</td>
+                <td align=“center”>{{i['category_1']}}</td>
+                <td align=“center”>{{i['wap_type']}}</td>
+                <td align=“center”>{% if i.charge_type == '10' %}按本{%else%}按章{%end%}</td>
+                <td align=“center”>{{i['state']}}</td>
+                <td align=“center”>{{i['fee']}}</td>
+                <td align=“center”>{{i['pay_down']}}</td>
+                <td align=“center”>{{i['pay_user']}}</td>
+                <td align=“center”>{{i['visit_uv']}}</td>
+                <td align=“center”>{{i['login_uv']}}</td>
+                <td align=“center”>{{i['visit']}}</td>
+                <td align=“center”>{{i['read_pv']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+

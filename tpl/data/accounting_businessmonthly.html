@@ -1,0 +1,71 @@
+
+<form id="pagerForm" method="post" action="accounting/businessmonthly">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+    <input type="hidden" name="query_mode" value="{{query_mode}}" />
+    <input type="hidden" name="group" value="{{group}}" />
+    <input type="hidden" name="month" value="{{month}}" />
+    <input type="hidden" name="orderField" value="{{order_field}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="accounting/businessmonthly" method="post">
+    <div class="searchBar">
+        <table class="searchContent">
+            <tr>
+                <td>
+                    时间：
+                    <select name="month">
+                        <option value="">未选择</option>
+                        {% for i in monthly %}
+                        <option value="{{i}}" {% if month == i %}selected{%end%}>{{i}}</option>
+                        {% end %}
+                    </select>
+                </td>
+                <td>
+                    商务分组：
+                    <select name="group">
+                        <option value="">不限</option>
+                        {% for i in groups %}
+                        <option value="{{i}}" {% if group == i %}selected{%end%}>{{i}}</option>
+                        {% end %}
+                    </select>
+                </td>
+                <td>
+                <li>
+                <a class="icon" href="accounting/businessmonthly?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?">
+                <span>导出EXCEL</span></a></li>
+                </td>
+                <td>
+                    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                </td>
+            </tr>
+        </table>
+	</form>
+</div>
+
+<div class="pageContent">
+	<table class="table" layoutH="100" width="100%">
+		<thead>
+			<tr>
+				<th align="center">厂商名称</th>
+				<th align="center" orderField="fee">月收入</th>
+			</tr>
+		</thead>
+		<tbody>	
+            {% for i in stats %}
+            <tr>
+                <td align=“center”>{{i['factory']}}</td>
+                <td align=“center”>{{i['fee']}}</td>
+            <tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+
+
+
+
+
+

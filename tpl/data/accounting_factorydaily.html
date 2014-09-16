@@ -1,0 +1,151 @@
+<form id="pagerForm" method="post" action="basic/partner">
+    <input type="hidden" name="start" value="{{start}}" />
+    <input type="hidden" name="date" value="{{date}}" />
+    <input type="hidden" name="product_name" value="{{product_name}}" />
+    <input type="hidden" name="version_name" value="{{version_name}}" />
+    <input type="hidden" name="factory_id" value="{{factory_id}}" />
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="accounting/factorydaily" method="post">
+	    <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td> 开始：
+                        <input name="start" class="date textInput readonly valid" readonly="true" type="text" value="{{start}}">
+                    </td>
+                    <td> 结束：
+                        <input name="date" class="date textInput readonly valid" readonly="true" type="text" value="{{date}}">
+                    </td>
+                    <td> 厂商：
+                        <select name="factory_id" class="required">
+                        {% if (current_user.is_root and query_mode == 'product') or current_user['name'] == 'wangliang' %}
+                        <option value="-1">不限</option>
+                        {% end %}
+                        {% for i in factory_list %}
+                        <option value="{{i.id}}" {% if factory_id == i.id %}selected{% end %}>{{i.name}}</option>
+                        {% end %}
+                        </select>
+                        <input class="required" name="factory_name" type="text" postField="factory_name"
+                            suggestFields="factory_name" suggestUrl="factory_accounting/search?resource={{query_mode}}" lookupGroup=""/>
+                    </td>
+                    <td>
+                        <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+$(function () {
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'accounting_factorydaily_chart',
+          type: 'line',
+          marginRight: 130,
+          marginBottom: 25
+      },
+      title: {
+          text: '基本统计',
+          x: -20 //center
+      },
+      subtitle: {
+          text: '{{ start }} to {{ date }}',
+          x: -20
+      },
+      xAxis: {
+          categories: {{ x_axis }}
+      },
+      yAxis: {
+          title: {
+              text: 'count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+          }]
+      },
+      tooltip: {
+          crosshairs: true,
+          shared: true
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -10,
+          y: 100,
+          borderWidth: 0
+      },
+      series: [
+      {% for idx,i in enumerate(results) %}
+      {
+          name: '{{ results[i]['title'] }}',
+          {% if results[i]['title'] not in ('新增启动用户')%}
+          visible:false,
+          {% end %}
+          data: [{{ results[i]['data'] }}]
+      }{% if idx != len(results)-1 %},{%end%} 
+      {% end %}
+      ]
+    });
+});
+</script>
+
+<div class="fixed" style="overflow:auto;height:420px;">
+<div id="accounting_factorydaily_chart" style="min-width: 400px; height: 330px; margin: 0 auto"></div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="85">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li>
+                <a class="icon" href="accounting/factorydaily?action=export" target="dwzExport" targettype="navTab" title="确实要导出这些记录吗?"> 
+                <span>导出EXCEL</span></a></li>
+            <li class="line">line</li>
+        </ul>
+    </div> 
+    </table>
+    <table class="table" width="100%" layoutH="85">
+		<thead>
+            <tr>
+                <th align="center">时间</th>
+                <th align="center" title="{{tpl_titles['user_run']}}">启动用户</th>
+                <th align="center" title="{{tpl_titles['new_user_run']}}">新增启动</th>
+                <th align="center" title="{{tpl_titles['pay_user']}}">付费用户</th>
+                <th align="center" title="{{tpl_titles['cpay_down']}}">按章付费</th>
+                <th align="center" title="{{tpl_titles['bpay_down']}}">按本付费</th>
+                <th align="center" title="{{tpl_titles['cpay_user']}}">按章付费用户</th>
+                <th align="center" title="{{tpl_titles['bpay_user']}}">按本付费用户</th>
+                <th align="center" title="{{tpl_titles['cfree_down']}}">按章免费</th>
+                <th align="center" title="{{tpl_titles['bfree_down']}}">按本章免费</th>
+                <th align="center" title="{{tpl_titles['cfree_user']}}">按章免费用户</th>
+                <th align="center" title="{{tpl_titles['bfree_user']}}">按本免费用户</th>
+                <th align="center" title="{{tpl_titles['feesum']}}">收入</th>                                                                                 
+            </tr>
+		</thead>
+		<tbody>		
+            {% for i in basics %}
+            <tr>
+                <td>{{i['title']}}</td>
+                <td>{{i['user_run']}}</td>
+                <td>{{i['new_user_run']}}</td>
+                <td>{{i['pay_user']}}</td>
+                <td>{{i['cpay_down']}}</td>
+                <td>{{i['bpay_down']}}</td>
+                <td>{{i['cpay_user']}}</td>
+                <td>{{i['bpay_user']}}</td>
+                <td>{{i['cfree_down']}}</td>
+                <td>{{i['bfree_down']}}</td>
+                <td>{{i['cfree_user']}}</td>
+                <td>{{i['bfree_user']}}</td>
+                <td>{{i['feesum']}}</td>
+            </tr>
+            {% end %}
+		</tbody>		
+    </table>
+</div>
+</div>
+

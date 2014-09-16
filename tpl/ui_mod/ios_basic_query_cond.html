@@ -1,0 +1,28 @@
+
+<div class="searchBar">
+    <table class="searchContent">
+        <tr>
+            <td>
+            {% if start %}
+                <input name="start" class="date textInput readonly valid" size=8 readonly="true" type="text" value="{{start}}">:
+            {% end %}
+            {% if date %}
+                <input name="date" class="date textInput readonly valid" size=8 readonly="true" type="text" value="{{date}}">
+            </td>
+            {% end %}
+            <td> 平台：
+            <select name="run_id">
+                <option value="0" {% if run_id == 0 %}selected{% end %}>不限</option>
+                {% for i in run_list %}
+                <option value="{{i['run_id']}}" {% if run_id == i['run_id'] %}selected{% end %}>{{i['run_name']}}</option>
+                {% end %}
+            </select>
+            </td>
+            <td> 渠道ID：<input type="text" name="partner_id" size="8" value="{{partner_id}}"/> </td>
+            <td>
+                <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+            </td>
+        </tr>
+    </table>
+</div>
+
