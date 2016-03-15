@@ -3,14 +3,14 @@
 # Abstract: pylibmc wrap
 
 import time
-import pylibmc
+#import pylibmc
 import logging
 
 class MClient(object):
 	min_cycle,max_cycle,total_time,counter,succ,fail,ext = 0xffffL,0L,0L,0L,0L,0L,''
 	def __init__(self, servers, binary=True, behaviors={"tcp_nodelay":True,"ketama":True}):
 		self.servers = servers
-		self.mc = pylibmc.Client(self.servers,binary=binary,behaviors=behaviors)
+#		self.mc = pylibmc.Client(self.servers,binary=binary,behaviors=behaviors)
 
 	def __getattr__(self, attr):
 		return getattr(self.mc,attr)

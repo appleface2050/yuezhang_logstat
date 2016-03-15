@@ -24,7 +24,7 @@ if options.debug:
 	import tornado.autoreload
 
 # my...
-import pylibmc
+#	import pylibmc
 from lib import uimodules, uimethods
 from conf.settings import COOKIE_NAME,COOKIE_SECRET,MC_SERVERS
 from lib.session import TornadoSessionManager

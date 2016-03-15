@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 import sys
 import logging
 sys.path.append('/usr/local/hive-0.7.1-cdh3u3/lib/py')
 
-from hive_service import ThriftHive
-from hive_service.ttypes import HiveServerException
+#from hive_service import ThriftHive
+#from hive_service.ttypes import HiveServerException
+#为了客户端运行注释掉thrift模块
+
 from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.transport import TTransport
